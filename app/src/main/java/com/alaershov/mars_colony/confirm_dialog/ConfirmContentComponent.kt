@@ -1,6 +1,6 @@
-package com.alaershov.bottomsheet_decompose_sample.confirm_dialog
+package com.alaershov.mars_colony.confirm_dialog
 
-import com.alaershov.bottomsheet_decompose_sample.bottomsheet.BottomSheetContentComponent
+import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface ConfirmContentComponent : BottomSheetContentComponent {

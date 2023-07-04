@@ -1,6 +1,6 @@
-package com.alaershov.bottomsheet_decompose_sample.info_dialog
+package com.alaershov.mars_colony.info_dialog
 
-import com.alaershov.bottomsheet_decompose_sample.bottomsheet.BottomSheetContentState
+import com.alaershov.mars_colony.bottomsheet.BottomSheetContentState
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

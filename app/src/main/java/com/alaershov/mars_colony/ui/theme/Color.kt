@@ -1,4 +1,4 @@
-package com.alaershov.bottomsheet_decompose_sample.ui.theme
+package com.alaershov.mars_colony.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

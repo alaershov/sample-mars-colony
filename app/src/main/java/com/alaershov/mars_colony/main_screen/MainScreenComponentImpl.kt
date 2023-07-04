@@ -1,8 +1,8 @@
-package com.alaershov.bottomsheet_decompose_sample.main_screen
+package com.alaershov.mars_colony.main_screen
 
-import com.alaershov.bottomsheet_decompose_sample.bottomsheet.BottomSheetContentComponent
-import com.alaershov.bottomsheet_decompose_sample.confirm_dialog.ConfirmContentComponentImpl
-import com.alaershov.bottomsheet_decompose_sample.info_dialog.InfoContentComponentImpl
+import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
+import com.alaershov.mars_colony.confirm_dialog.ConfirmContentComponentImpl
+import com.alaershov.mars_colony.info_dialog.InfoContentComponentImpl
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation

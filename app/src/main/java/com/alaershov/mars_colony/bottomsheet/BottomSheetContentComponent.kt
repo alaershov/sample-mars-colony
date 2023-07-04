@@ -1,4 +1,4 @@
-package com.alaershov.bottomsheet_decompose_sample.bottomsheet
+package com.alaershov.mars_colony.bottomsheet
 
 import kotlinx.coroutines.flow.StateFlow
 

@@ -1,4 +1,4 @@
-package com.alaershov.bottomsheet_decompose_sample.main_screen
+package com.alaershov.mars_colony.main_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.bottomsheet_decompose_sample.bottomsheet.BottomSheetContentComponent
-import com.alaershov.bottomsheet_decompose_sample.bottomsheet.ChildSlotModalBottomSheetLayout
-import com.alaershov.bottomsheet_decompose_sample.ui.theme.DecomposeSampleTheme
+import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
+import com.alaershov.mars_colony.bottomsheet.ChildSlotModalBottomSheetLayout
+import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
@@ -94,7 +94,7 @@ private fun MainScreenContent(
 @Preview(showBackground = true)
 @Composable
 private fun MainScreenPreview() {
-    DecomposeSampleTheme {
+    MarsColonyTheme {
         MainScreen(PreviewMainScreenComponent())
     }
 }

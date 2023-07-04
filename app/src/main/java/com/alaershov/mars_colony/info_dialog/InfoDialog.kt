@@ -1,4 +1,4 @@
-package com.alaershov.bottomsheet_decompose_sample.confirm_dialog
+package com.alaershov.mars_colony.info_dialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,15 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.bottomsheet_decompose_sample.bottomsheet.BottomSheetContentState
-import com.alaershov.bottomsheet_decompose_sample.ui.theme.DecomposeSampleTheme
+import com.alaershov.mars_colony.bottomsheet.BottomSheetContentState
+import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun ConfirmDialog(component: ConfirmContentComponent) {
+fun InfoDialog(component: InfoContentComponent) {
     val state by component.state.collectAsState()
-
     Surface(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -30,36 +29,32 @@ fun ConfirmDialog(component: ConfirmContentComponent) {
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
-                text = "Confirm Dialog",
+                text = "Info Dialog",
                 style = MaterialTheme.typography.headlineMedium
             )
             Text(
-                modifier = Modifier.padding(
-                    horizontal = 16.dp,
-                    vertical = 8.dp
-                ),
-                text = state.question
+                modifier = Modifier.padding(16.dp),
+                text = "Please read carefully",
+                style = MaterialTheme.typography.titleMedium
             )
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 16.dp),
-                onClick = component::onYesClicked
-            ) {
+            state.itemList.forEach { item ->
                 Text(
-                    text = "Yeah, sure!"
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp
+                    ),
+                    text = item
                 )
             }
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp),
-                onClick = component::onNoClicked
+                    .padding(top = 16.dp),
+                onClick = component::onDismissClicked
             ) {
                 Text(
-                    text = "No, thanks"
+                    text = "Ok, got it"
                 )
             }
             Button(
@@ -67,11 +62,11 @@ fun ConfirmDialog(component: ConfirmContentComponent) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .padding(top = 8.dp)
-                    .padding(bottom = 16.dp),
-                onClick = component::onInfoClicked
+                    .padding(bottom = 8.dp),
+                onClick = component::onBuyClicked
             ) {
                 Text(
-                    text = "Info"
+                    text = "Buy!"
                 )
             }
         }
@@ -81,28 +76,27 @@ fun ConfirmDialog(component: ConfirmContentComponent) {
 @Preview(showBackground = true)
 @Composable
 private fun InfoDialogPreview() {
-    DecomposeSampleTheme {
-        ConfirmDialog(PreviewConfirmContentComponent())
+    MarsColonyTheme {
+        InfoDialog(PreviewInfoContentComponent())
     }
 }
 
-internal class PreviewConfirmContentComponent : ConfirmContentComponent {
-
-    override val state: StateFlow<ConfirmDialogState> = MutableStateFlow(
-        ConfirmDialogState("Are you sure you wanna do this?")
+internal class PreviewInfoContentComponent : InfoContentComponent {
+    override val state: StateFlow<InfoDialogState> = MutableStateFlow(
+        InfoDialogState(
+            listOf(
+                "One",
+                "Two",
+                "Three"
+            )
+        )
     )
 
     override val bottomSheetContentState: StateFlow<BottomSheetContentState> = MutableStateFlow(
         BottomSheetContentState(true)
     )
 
-    override fun onYesClicked() {
-    }
-
-    override fun onNoClicked() {
-    }
-
-    override fun onInfoClicked() {
+    override fun onBuyClicked() {
     }
 
     override fun onDismissClicked() {

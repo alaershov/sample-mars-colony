@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterialApi::class)
 
-package com.alaershov.bottomsheet_decompose_sample.bottomsheet
+package com.alaershov.mars_colony.bottomsheet
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer

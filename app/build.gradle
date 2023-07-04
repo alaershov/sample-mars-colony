@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.alaershov.bottomsheet_decompose_sample'
+    namespace 'com.alaershov.mars_colony'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.alaershov.bottomsheet_decompose_sample"
+        applicationId "com.alaershov.mars_colony"
         minSdk 26
         targetSdk 33
         versionCode 1

@@ -1,4 +1,4 @@
-package com.alaershov.bottomsheet_decompose_sample.main_screen
+package com.alaershov.mars_colony.main_screen
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
