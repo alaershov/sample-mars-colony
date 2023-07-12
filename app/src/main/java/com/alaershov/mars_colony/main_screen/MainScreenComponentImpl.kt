@@ -67,6 +67,14 @@ class MainScreenComponentImpl(
                     }
                 )
             }
+
+            MainScreenBottomSheetConfig.HabitatBuild -> {
+                HabitatBuildDialogComponentImpl(
+                    componentContext = componentContext,
+                    habitatRepository = HabitatRepository,
+                    onDismissed = bottomSheetNavigation::dismiss,
+                )
+            }
         }
     }
 
