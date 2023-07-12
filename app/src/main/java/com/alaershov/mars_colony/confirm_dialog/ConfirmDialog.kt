@@ -104,7 +104,4 @@ internal class PreviewConfirmContentComponent : ConfirmContentComponent {
 
     override fun onInfoClicked() {
     }
-
-    override fun onDismissClicked() {
-    }
 }

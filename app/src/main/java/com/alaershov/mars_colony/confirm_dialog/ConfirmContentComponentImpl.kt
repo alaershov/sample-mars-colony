@@ -30,8 +30,4 @@ class ConfirmContentComponentImpl(
     override fun onInfoClicked() {
         onInfoClicked.invoke()
     }
-
-    override fun onDismissClicked() {
-        onDismissed()
-    }
 }

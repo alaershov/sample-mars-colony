@@ -8,6 +8,4 @@ import kotlinx.coroutines.flow.StateFlow
 interface BottomSheetContentComponent {
 
     val bottomSheetContentState: StateFlow<BottomSheetContentState>
-
-    fun onDismissClicked()
 }

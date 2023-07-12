@@ -7,4 +7,6 @@ interface InfoContentComponent : BottomSheetContentComponent {
     val state: StateFlow<InfoDialogState>
 
     fun onBuyClicked()
+
+    fun onDismissClicked()
 }
