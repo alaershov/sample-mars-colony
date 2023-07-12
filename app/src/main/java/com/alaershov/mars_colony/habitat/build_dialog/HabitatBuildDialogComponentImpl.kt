@@ -25,11 +25,7 @@ class HabitatBuildDialogComponentImpl(
 
     override val state: StateFlow<HabitatBuildDialogState> = _state
 
-    private val _bottomSheetContentState = MutableStateFlow(
-        BottomSheetContentState(isDismissAllowed = true)
-    )
-    override val bottomSheetContentState: StateFlow<BottomSheetContentState> =
-        _bottomSheetContentState
+    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = state
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
@@ -49,18 +45,12 @@ class HabitatBuildDialogComponentImpl(
         if (state.value.isProgress) return
 
         scope.launch {
-            _bottomSheetContentState.value = BottomSheetContentState(
-                isDismissAllowed = false
-            )
             _state.value = state.value.copy(
                 isProgress = true
             )
 
             habitatRepository.buildHabitat(state.value.capacity)
 
-            _bottomSheetContentState.value = BottomSheetContentState(
-                isDismissAllowed = true
-            )
             _state.value = state.value.copy(
                 isProgress = false
             )

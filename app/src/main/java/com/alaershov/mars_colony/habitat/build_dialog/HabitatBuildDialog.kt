@@ -102,9 +102,7 @@ class PreviewHabitatBuildDialogComponent : HabitatBuildDialogComponent {
         )
     )
 
-    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = MutableStateFlow(
-        BottomSheetContentState(true)
-    )
+    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = state
 
     override fun onPlusClick() {}
 

@@ -81,9 +81,7 @@ class PreviewHabitatDismantleDialogComponent : HabitatDismantleDialogComponent {
         )
     )
 
-    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = MutableStateFlow(
-        BottomSheetContentState(true)
-    )
+    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = state
 
     override fun onConfirmClick() {}
 }

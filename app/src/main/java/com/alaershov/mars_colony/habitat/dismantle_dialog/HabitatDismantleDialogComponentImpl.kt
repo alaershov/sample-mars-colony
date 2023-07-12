@@ -29,9 +29,7 @@ class HabitatDismantleDialogComponentImpl(
 
     override val state: StateFlow<HabitatDismantleDialogState> = _state
 
-    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = MutableStateFlow(
-        BottomSheetContentState(true)
-    )
+    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = state
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
