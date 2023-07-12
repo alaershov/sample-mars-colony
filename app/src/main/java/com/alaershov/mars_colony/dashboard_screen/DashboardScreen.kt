@@ -32,7 +32,6 @@ fun DashboardScreen(component: DashboardScreenComponent) {
 
         Column(
             modifier = Modifier
-                .padding(top = 16.dp)
                 .fillMaxWidth()
                 .clickable {
                     component.onHabitatClick()

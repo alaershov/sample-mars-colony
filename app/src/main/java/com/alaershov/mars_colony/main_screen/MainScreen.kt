@@ -40,7 +40,7 @@ fun MainScreen(component: MainScreenComponent) {
                 topStart = 20.dp,
                 topEnd = 20.dp
             ),
-            sheetBackgroundColor = MaterialTheme.colorScheme.surface
+            sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant
         ) {
             MainScreenContent(component)
         }
