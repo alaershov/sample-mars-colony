@@ -1,14 +1,12 @@
 package com.alaershov.mars_colony.main_screen
 
 import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.confirm_dialog.ConfirmContentComponentImpl
 import com.alaershov.mars_colony.dashboard_screen.DashboardScreenComponentImpl
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponentImpl
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponentImpl
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponentImpl
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponentImpl
-import com.alaershov.mars_colony.info_dialog.InfoContentComponentImpl
 import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
 import com.alaershov.mars_colony.main_screen.bottom_sheet.MainScreenBottomSheetConfig
 import com.alaershov.mars_colony.power.PowerPlantRepository
@@ -64,31 +62,6 @@ class MainScreenComponentImpl(
         handleBackButton = false,
     ) { config, componentContext ->
         when (config) {
-            is MainScreenBottomSheetConfig.Confirm -> {
-                ConfirmContentComponentImpl(
-                    componentContext = componentContext,
-                    question = config.question,
-                    onDismissed = bottomSheetNavigation::dismiss,
-                    onInfoClicked = {
-                        bottomSheetNavigation.activate(MainScreenBottomSheetConfig.Info)
-                    }
-                )
-            }
-
-            MainScreenBottomSheetConfig.Info -> {
-                InfoContentComponentImpl(
-                    componentContext = componentContext,
-                    onDismissed = bottomSheetNavigation::dismiss,
-                    onBuyClicked = {
-                        bottomSheetNavigation.activate(
-                            MainScreenBottomSheetConfig.Confirm(
-                                question = "Do you want to buy this?"
-                            )
-                        )
-                    }
-                )
-            }
-
             MainScreenBottomSheetConfig.HabitatBuild -> {
                 HabitatBuildDialogComponentImpl(
                     componentContext = componentContext,
