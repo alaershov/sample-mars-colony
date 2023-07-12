@@ -1,7 +1,9 @@
 package com.alaershov.mars_colony.dashboard_screen
 
 import com.alaershov.mars_colony.habitat.HabitatRepository
+import com.alaershov.mars_colony.habitat.totalCapacity
 import com.alaershov.mars_colony.power.PowerPlantRepository
+import com.alaershov.mars_colony.power.totalPower
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,8 +39,8 @@ class DashboardScreenComponentImpl(
             powerPlantRepository.state,
         ) { habitatState, powerPlantState ->
             DashboardScreenState(
-                totalCapacity = habitatState.habitatList.sumOf { it.capacity },
-                totalPower = powerPlantState.powerPlantList.sumOf { it.power },
+                totalCapacity = habitatState.totalCapacity,
+                totalPower = powerPlantState.totalPower,
             )
         }
             .onEach { dashboardScreenState ->
@@ -52,6 +54,6 @@ class DashboardScreenComponentImpl(
     }
 
     override fun onPowerClick() {
-        navigateToPowerPlantList
+        navigateToPowerPlantList()
     }
 }

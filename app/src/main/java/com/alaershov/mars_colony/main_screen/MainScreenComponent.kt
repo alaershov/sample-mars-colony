@@ -15,12 +15,6 @@ interface MainScreenComponent {
 
     val bottomSheet: Value<ChildSlot<*, BottomSheetContentComponent>>
 
-    fun onInfoBottomSheetClicked()
-
-    fun onBuyConfirmBottomSheetClicked()
-
-    fun onLogoutConfirmBottomSheetClicked()
-
     fun onBottomSheetDismiss()
 
     sealed class Child {

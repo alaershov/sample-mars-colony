@@ -27,4 +27,11 @@ object HabitatRepository {
             habitatList = value.habitatList + habitat
         )
     }
+
+    fun dismantleHabitat(id: String) {
+        val value = _state.value
+        _state.value = value.copy(
+            habitatList = value.habitatList.filterNot { it.id == id }
+        )
+    }
 }

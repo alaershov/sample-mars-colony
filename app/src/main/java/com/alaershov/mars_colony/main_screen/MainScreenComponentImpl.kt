@@ -5,10 +5,12 @@ import com.alaershov.mars_colony.confirm_dialog.ConfirmContentComponentImpl
 import com.alaershov.mars_colony.dashboard_screen.DashboardScreenComponentImpl
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponentImpl
+import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponentImpl
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponentImpl
-import com.alaershov.mars_colony.info_dialog.InfoContentComponentImpl
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponentImpl
+import com.alaershov.mars_colony.info_dialog.InfoContentComponentImpl
 import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
+import com.alaershov.mars_colony.main_screen.bottom_sheet.MainScreenBottomSheetConfig
 import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponentImpl
 import com.arkivanov.decompose.ComponentContext
@@ -94,6 +96,15 @@ class MainScreenComponentImpl(
                     onDismissed = bottomSheetNavigation::dismiss,
                 )
             }
+
+            is MainScreenBottomSheetConfig.HabitatDismantle -> {
+                HabitatDismantleDialogComponentImpl(
+                    componentContext = componentContext,
+                    habitatId = config.habitatId,
+                    habitatRepository = HabitatRepository,
+                    onDismiss = bottomSheetNavigation::dismiss,
+                )
+            }
         }
     }
 
@@ -125,7 +136,14 @@ class MainScreenComponentImpl(
                     componentContext = componentContext,
                     habitatRepository = HabitatRepository,
                     onBuildClick = {
-                        bottomSheetNavigation.activate(MainScreenBottomSheetConfig.HabitatBuild)
+                        bottomSheetNavigation.activate(
+                            MainScreenBottomSheetConfig.HabitatBuild
+                        )
+                    },
+                    onDismantleHabitatClick = { id ->
+                        bottomSheetNavigation.activate(
+                            MainScreenBottomSheetConfig.HabitatDismantle(id)
+                        )
                     }
                 )
             )
@@ -143,26 +161,6 @@ class MainScreenComponentImpl(
                 )
             )
         }
-    }
-
-    override fun onInfoBottomSheetClicked() {
-        bottomSheetNavigation.activate(MainScreenBottomSheetConfig.Info)
-    }
-
-    override fun onBuyConfirmBottomSheetClicked() {
-        bottomSheetNavigation.activate(
-            MainScreenBottomSheetConfig.Confirm(
-                question = "Do you want to buy this?"
-            )
-        )
-    }
-
-    override fun onLogoutConfirmBottomSheetClicked() {
-        bottomSheetNavigation.activate(
-            MainScreenBottomSheetConfig.Confirm(
-                question = "Log out? Really?"
-            )
-        )
     }
 
     override fun onBottomSheetDismiss() {

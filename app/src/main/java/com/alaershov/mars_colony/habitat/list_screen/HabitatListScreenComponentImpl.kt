@@ -1,6 +1,7 @@
 package com.alaershov.mars_colony.habitat.list_screen
 
 import com.alaershov.mars_colony.habitat.HabitatRepository
+import com.alaershov.mars_colony.habitat.totalCapacity
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,8 +13,9 @@ import kotlinx.coroutines.flow.onEach
 
 class HabitatListScreenComponentImpl(
     componentContext: ComponentContext,
-    private val habitatRepository: HabitatRepository,
+    habitatRepository: HabitatRepository,
     private val onBuildClick: () -> Unit,
+    private val onDismantleHabitatClick: (String) -> Unit,
 ) : HabitatListScreenComponent, ComponentContext by componentContext {
 
     private val _state = MutableStateFlow(
@@ -32,7 +34,7 @@ class HabitatListScreenComponentImpl(
             .onEach { habitatState ->
                 _state.value = HabitatListScreenState(
                     list = habitatState.habitatList,
-                    totalCapacity = habitatState.habitatList.sumOf { it.capacity }
+                    totalCapacity = habitatState.totalCapacity
                 )
             }
             .launchIn(scope)
@@ -43,6 +45,6 @@ class HabitatListScreenComponentImpl(
     }
 
     override fun onHabitatClick(id: String) {
-        // TODO
+        onDismantleHabitatClick.invoke(id)
     }
 }

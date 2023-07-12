@@ -53,7 +53,7 @@ fun DashboardScreen(component: DashboardScreenComponent) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    component.onHabitatClick()
+                    component.onPowerClick()
                 }
                 .padding(vertical = 16.dp)
         ) {

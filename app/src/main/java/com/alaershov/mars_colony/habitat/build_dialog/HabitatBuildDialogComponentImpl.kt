@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class HabitatBuildDialogComponentImpl(
-    private val componentContext: ComponentContext,
+    componentContext: ComponentContext,
     private val habitatRepository: HabitatRepository,
     private val onDismissed: () -> Unit
 ) : HabitatBuildDialogComponent, ComponentContext by componentContext {
