@@ -2,18 +2,29 @@ package com.alaershov.mars_colony.main_screen
 
 import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.confirm_dialog.ConfirmContentComponentImpl
+import com.alaershov.mars_colony.dashboard_screen.DashboardScreenComponentImpl
+import com.alaershov.mars_colony.habitat.HabitatRepository
+import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponentImpl
+import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponentImpl
 import com.alaershov.mars_colony.info_dialog.InfoContentComponentImpl
+import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponentImpl
+import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
+import com.alaershov.mars_colony.power.PowerPlantRepository
+import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponentImpl
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlin.random.Random
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 
 class MainScreenComponentImpl(
     private val componentContext: ComponentContext
@@ -26,9 +37,17 @@ class MainScreenComponentImpl(
         }
     }
 
-    // собственное состояние компонента - не связано с BottomSheet
-    private val _state = MutableStateFlow(MainScreenState(number = 1553))
-    override val state: StateFlow<MainScreenState> = _state
+    private val navigation = StackNavigation<Config>()
+
+    private val _childStack =
+        childStack(
+            source = navigation,
+            initialConfiguration = Config.Dashboard,
+            handleBackButton = true, // Pop the back stack on back button press
+            childFactory = ::createChild,
+        )
+
+    override val childStack: Value<ChildStack<*, Child>> = _childStack
 
     // интерфейс для запуска действий навигации в слоте BottomSheet
     private val bottomSheetNavigation = SlotNavigation<MainScreenBottomSheetConfig>()
@@ -85,8 +104,45 @@ class MainScreenComponentImpl(
         }
     }
 
-    override fun onRandomizeClicked() {
-        _state.value = _state.value.copy(number = Random.nextInt())
+    private fun createChild(config: Config, componentContext: ComponentContext): Child {
+        return when (config) {
+            Config.Dashboard -> Child.Dashboard(
+                DashboardScreenComponentImpl(
+                    componentContext = componentContext,
+                    habitatRepository = HabitatRepository,
+                    powerPlantRepository = PowerPlantRepository,
+                    navigateToHabitatList = {
+                        navigation.push(Config.HabitatList)
+                    },
+                    navigateToPowerPlantList = {
+                        navigation.push(Config.PowerPlantList)
+                    }
+                )
+            )
+
+            Config.HabitatList -> Child.HabitatList(
+                HabitatListScreenComponentImpl(
+                    componentContext = componentContext,
+                    habitatRepository = HabitatRepository,
+                    onBuildClick = {
+                        bottomSheetNavigation.activate(MainScreenBottomSheetConfig.HabitatBuild)
+                    }
+                )
+            )
+
+            is Config.HabitatInfo -> Child.HabitatInfo(
+                HabitatInfoScreenComponentImpl(
+                    componentContext = componentContext,
+                    habitatId = config.habitatId
+                )
+            )
+
+            Config.PowerPlantList -> Child.PowerPlantList(
+                PowerPlantListScreenComponentImpl(
+                    componentContext = componentContext
+                )
+            )
+        }
     }
 
     override fun onInfoBottomSheetClicked() {
@@ -111,5 +167,22 @@ class MainScreenComponentImpl(
 
     override fun onBottomSheetDismiss() {
         bottomSheetNavigation.dismiss()
+    }
+
+    private sealed class Config : Parcelable {
+
+        @Parcelize
+        object Dashboard : Config()
+
+        @Parcelize
+        object HabitatList : Config()
+
+        @Parcelize
+        data class HabitatInfo(
+            val habitatId: String
+        ) : Config()
+
+        @Parcelize
+        object PowerPlantList : Config()
     }
 }
