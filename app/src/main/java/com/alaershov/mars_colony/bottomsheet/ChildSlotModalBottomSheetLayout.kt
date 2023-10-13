@@ -2,6 +2,7 @@
 
 package com.alaershov.mars_colony.bottomsheet
 
+import android.util.Log
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -45,7 +46,7 @@ fun ChildSlotModalBottomSheetLayout(
     sheetBackgroundColor: Color = MaterialTheme.colors.surface,
     sheetContentColor: Color = contentColorFor(sheetBackgroundColor),
     scrimColor: Color = ModalBottomSheetDefaults.scrimColor,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val currentOnDismiss by rememberUpdatedState(onDismiss)
 
@@ -70,7 +71,7 @@ fun ChildSlotModalBottomSheetLayout(
     val sheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true,
-        confirmValueChange = { state ->
+        confirmStateChange = { state ->
             if (state == ModalBottomSheetValue.Hidden) {
                 val instance = sheetContentSlot.child?.instance
                 instance?.bottomSheetContentState?.value?.isDismissAllowed ?: true
@@ -82,19 +83,29 @@ fun ChildSlotModalBottomSheetLayout(
 
     // Наблюдение за состоянием слота навигации bottomSheet.
     LaunchedEffect(sheetContentSlot) {
-        snapshotFlow { sheetContentSlot.child?.instance }
-            .collect { instance ->
-                if (instance == null) {
-                    // Если слот занулился, то нужно сначала скрыть ModalBottomSheet,
-                    // а потом занулить latestChildInstance, чтобы на UI во время
-                    // скрытия отображалось содержимое BottomSheet, несмотря на то, что child уже null.
-                    sheetState.hide()
-                    latestChildInstance = null
-                } else {
-                    latestChildInstance = instance
-                    sheetState.show()
-                }
-            }
+        Log.d("ChildSlotMBS", "sheetContentSlot effect launch")
+        val instance = sheetContentSlot.child?.instance
+
+        Log.d("ChildSlotMBS", "sheetContentSlot change instance $instance")
+        if (instance == null) {
+            // Если слот занулился, то нужно сначала скрыть ModalBottomSheet,
+            // а потом занулить latestChildInstance, чтобы на UI во время
+            // скрытия отображалось содержимое BottomSheet, несмотря на то, что child уже null.
+
+            // TODO здесь есть баг, который происходит в случае отмены корутины во время hide,
+            //  например, нажали кнопку назад
+            //  latestChildInstance не зануляется, и несмотря на то, что в логическом состоянии
+            //  sheetContentSlot уже null, ботомщит продолжает отображаться.
+            //  возможно это был баг в Compose 1.3.2
+            Log.d("ChildSlotMBS", "instance = null (start hide)")
+            sheetState.hide()
+            latestChildInstance = null
+            Log.d("ChildSlotMBS", "latestChildInstance = null (finish hide)")
+        } else {
+            latestChildInstance = instance
+            Log.d("ChildSlotMBS", "latestChildInstance = $instance (start show)")
+            sheetState.show()
+        }
     }
 
     // Наблюдение за состоянием UI ModalBottomSheet.
