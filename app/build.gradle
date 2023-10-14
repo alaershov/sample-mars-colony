@@ -59,6 +59,7 @@ dependencies {
 
     implementation libs.bundles.decompose
 
+    implementation project(':ui')
     implementation project(':bottom-sheet')
 
     testImplementation 'junit:junit:4.13.2'
