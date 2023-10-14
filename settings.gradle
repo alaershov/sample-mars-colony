@@ -11,6 +11,43 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        libs {
+            library('androidx-core', 'androidx.core:core-ktx:1.12.0')
+            library('androidx-lifecycle-runtime', 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2')
+            library('androidx-activity-compose', 'androidx.activity:activity-compose:1.8.0')
+
+            version('compose-compiler', '1.5.3')
+            version('androidx-compose-bom', '2023.10.00')
+            library('androidx-compose-bom', 'androidx.compose', 'compose-bom').versionRef('androidx-compose-bom')
+            library('androidx-compose-ui-ui', 'androidx.compose.ui', 'ui').withoutVersion()
+            library('androidx-compose-ui-ui-graphics', 'androidx.compose.ui', 'ui-graphics').withoutVersion()
+            library('androidx-compose-ui-ui-tooling-preview', 'androidx.compose.ui', 'ui-tooling-preview').withoutVersion()
+            library('androidx-compose-material3', 'androidx.compose.material3', 'material3').withoutVersion()
+            library('androidx-compose-material', 'androidx.compose.material', 'material').withoutVersion()
+            bundle(
+                    'compose',
+                    [
+                            'androidx-compose-ui-ui',
+                            'androidx-compose-ui-ui-graphics',
+                            'androidx-compose-ui-ui-tooling-preview',
+                            'androidx-compose-material3',
+                            'androidx-compose-material',
+                    ]
+            )
+
+            version('decompose', '2.1.2')
+            library('decompose', 'com.arkivanov.decompose', 'decompose').versionRef('decompose')
+            library('decompose-extensions-compose-jetpack', 'com.arkivanov.decompose', 'extensions-compose-jetpack').versionRef('decompose')
+            bundle(
+                    'decompose',
+                    [
+                            'decompose',
+                            'decompose-extensions-compose-jetpack'
+                    ]
+            )
+        }
+    }
 }
 rootProject.name = "Mars Colony"
 include ':app'
