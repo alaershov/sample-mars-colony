@@ -143,10 +143,10 @@ class MainScreenComponentImpl(
     private sealed class Config : Parcelable {
 
         @Parcelize
-        object Dashboard : Config()
+        data object Dashboard : Config()
 
         @Parcelize
-        object HabitatList : Config()
+        data object HabitatList : Config()
 
         @Parcelize
         data class HabitatInfo(
@@ -154,6 +154,6 @@ class MainScreenComponentImpl(
         ) : Config()
 
         @Parcelize
-        object PowerPlantList : Config()
+        data object PowerPlantList : Config()
     }
 }

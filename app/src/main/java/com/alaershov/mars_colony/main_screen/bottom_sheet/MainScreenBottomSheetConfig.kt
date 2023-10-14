@@ -6,7 +6,7 @@ import com.arkivanov.essenty.parcelable.Parcelize
 sealed class MainScreenBottomSheetConfig : Parcelable {
 
     @Parcelize
-    object HabitatBuild : MainScreenBottomSheetConfig()
+    data object HabitatBuild : MainScreenBottomSheetConfig()
 
     @Parcelize
     data class HabitatDismantle(
