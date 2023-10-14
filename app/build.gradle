@@ -61,6 +61,7 @@ dependencies {
 
     implementation project(':ui')
     implementation project(':bottom-sheet')
+    implementation project(':feature-habitat')
 
     testImplementation 'junit:junit:4.13.2'
 

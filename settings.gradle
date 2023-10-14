@@ -53,3 +53,4 @@ rootProject.name = "Mars Colony"
 include ':app'
 include ':bottom-sheet'
 include ':ui'
+include ':feature-habitat'
