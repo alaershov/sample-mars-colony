@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.bottomsheet
+package com.alaershov.mars_colony.bottom_sheet
 
 /**
  * Состояние компонента Modal Bottom Sheet

@@ -1,6 +1,6 @@
 package com.alaershov.mars_colony.habitat.build_dialog
 
-import com.alaershov.mars_colony.bottomsheet.BottomSheetContentState
+import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentState
 
 data class HabitatBuildDialogState(
     val capacity: Int,

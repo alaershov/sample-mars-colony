@@ -1,6 +1,6 @@
 package com.alaershov.mars_colony.main_screen
 
-import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
+import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.dashboard_screen.DashboardScreenComponentImpl
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponentImpl

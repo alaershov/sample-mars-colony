@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterialApi::class)
 
-package com.alaershov.mars_colony.bottomsheet
+package com.alaershov.mars_colony.bottom_sheet
 
 import android.util.Log
 import androidx.compose.foundation.layout.ColumnScope
@@ -70,15 +70,15 @@ fun ChildSlotModalBottomSheetLayout(
     // Состояние UI ModalBottomSheet.
     val sheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-        confirmStateChange = { state ->
+        confirmValueChange = { state ->
             if (state == ModalBottomSheetValue.Hidden) {
                 val instance = sheetContentSlot.child?.instance
                 instance?.bottomSheetContentState?.value?.isDismissAllowed ?: true
             } else {
                 true
             }
-        }
+        },
+        skipHalfExpanded = false
     )
 
     // Наблюдение за состоянием слота навигации bottomSheet.

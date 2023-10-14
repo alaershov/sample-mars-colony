@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.mars_colony.bottomsheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.bottomsheet.ChildSlotModalBottomSheetLayout
+import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
+import com.alaershov.mars_colony.bottom_sheet.ChildSlotModalBottomSheetLayout
 import com.alaershov.mars_colony.dashboard_screen.PreviewDashboardScreenComponent
 import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
 import com.alaershov.mars_colony.main_screen.bottom_sheet.MainScreenBottomSheetContent

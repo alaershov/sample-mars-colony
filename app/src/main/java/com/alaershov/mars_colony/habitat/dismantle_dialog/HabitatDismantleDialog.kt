@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.mars_colony.bottomsheet.BottomSheetContentState
+import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentState
 import com.alaershov.mars_colony.habitat.Habitat
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import kotlinx.coroutines.flow.MutableStateFlow

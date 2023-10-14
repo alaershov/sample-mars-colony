@@ -1,6 +1,6 @@
 package com.alaershov.mars_colony.habitat.dismantle_dialog
 
-import com.alaershov.mars_colony.bottomsheet.BottomSheetContentState
+import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentState
 import com.alaershov.mars_colony.habitat.Habitat
 
 data class HabitatDismantleDialogState(
