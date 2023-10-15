@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.main_screen
+package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.dashboard.DashboardScreenComponentImpl
@@ -7,10 +7,10 @@ import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponen
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponentImpl
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponentImpl
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponentImpl
-import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
-import com.alaershov.mars_colony.main_screen.bottom_sheet.MainScreenBottomSheetConfig
 import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponentImpl
+import com.alaershov.mars_colony.root.RootComponent.Child
+import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
@@ -26,9 +26,9 @@ import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 
-class MainScreenComponentImpl(
+class DefaultRootComponent(
     private val componentContext: ComponentContext
-) : MainScreenComponent, ComponentContext by componentContext {
+) : RootComponent, ComponentContext by componentContext {
 
     private val backCallback = BackCallback {
         val child = bottomSheet.value.child
@@ -50,7 +50,7 @@ class MainScreenComponentImpl(
     override val childStack: Value<ChildStack<*, Child>> = _childStack
 
     // интерфейс для запуска действий навигации в слоте BottomSheet
-    private val bottomSheetNavigation = SlotNavigation<MainScreenBottomSheetConfig>()
+    private val bottomSheetNavigation = SlotNavigation<RootBottomSheetConfig>()
 
     // состояние слота BottomSheet - используется для отрисовки на экране
     override val bottomSheet: Value<ChildSlot<*, BottomSheetContentComponent>> = childSlot(
@@ -62,7 +62,7 @@ class MainScreenComponentImpl(
         handleBackButton = false,
     ) { config, componentContext ->
         when (config) {
-            MainScreenBottomSheetConfig.HabitatBuild -> {
+            RootBottomSheetConfig.HabitatBuild -> {
                 HabitatBuildDialogComponentImpl(
                     componentContext = componentContext,
                     habitatRepository = HabitatRepository,
@@ -70,7 +70,7 @@ class MainScreenComponentImpl(
                 )
             }
 
-            is MainScreenBottomSheetConfig.HabitatDismantle -> {
+            is RootBottomSheetConfig.HabitatDismantle -> {
                 HabitatDismantleDialogComponentImpl(
                     componentContext = componentContext,
                     habitatId = config.habitatId,
@@ -110,12 +110,12 @@ class MainScreenComponentImpl(
                     habitatRepository = HabitatRepository,
                     onBuildClick = {
                         bottomSheetNavigation.activate(
-                            MainScreenBottomSheetConfig.HabitatBuild
+                            RootBottomSheetConfig.HabitatBuild
                         )
                     },
                     onDismantleHabitatClick = { id ->
                         bottomSheetNavigation.activate(
-                            MainScreenBottomSheetConfig.HabitatDismantle(id)
+                            RootBottomSheetConfig.HabitatDismantle(id)
                         )
                     }
                 )

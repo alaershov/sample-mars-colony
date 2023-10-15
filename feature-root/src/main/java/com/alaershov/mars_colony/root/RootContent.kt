@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.main_screen
+package com.alaershov.mars_colony.root
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,8 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.bottom_sheet.ChildSlotModalBottomSheetLayout
 import com.alaershov.mars_colony.dashboard.PreviewDashboardScreenComponent
-import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
-import com.alaershov.mars_colony.main_screen.bottom_sheet.MainScreenBottomSheetContent
+import com.alaershov.mars_colony.root.RootComponent.Child
+import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetContent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -20,7 +20,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 
 @Composable
-fun MainScreen(component: MainScreenComponent) {
+fun RootContent(component: RootComponent) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -28,7 +28,7 @@ fun MainScreen(component: MainScreenComponent) {
         ChildSlotModalBottomSheetLayout(
             sheetContentSlotState = component.bottomSheet,
             sheetContent = { component ->
-                MainScreenBottomSheetContent(component)
+                RootBottomSheetContent(component)
             },
             onDismiss = component::onBottomSheetDismiss,
             sheetShape = RoundedCornerShape(
@@ -37,7 +37,7 @@ fun MainScreen(component: MainScreenComponent) {
             ),
             sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant
         ) {
-            MainScreenContent(component)
+            RootScreenContent(component)
         }
     }
 }
@@ -46,11 +46,11 @@ fun MainScreen(component: MainScreenComponent) {
 @Composable
 private fun MainScreenPreview() {
     MarsColonyTheme {
-        MainScreen(PreviewMainScreenComponent())
+        RootContent(PreviewRootComponent())
     }
 }
 
-internal class PreviewMainScreenComponent : MainScreenComponent {
+internal class PreviewRootComponent : RootComponent {
 
     override val childStack: Value<ChildStack<Unit, Child>> =
         MutableValue(ChildStack(Unit, Child.Dashboard(PreviewDashboardScreenComponent())))
