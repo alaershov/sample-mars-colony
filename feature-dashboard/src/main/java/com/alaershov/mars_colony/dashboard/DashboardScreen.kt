@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.dashboard_screen
+package com.alaershov.mars_colony.dashboard
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

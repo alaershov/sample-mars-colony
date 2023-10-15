@@ -1,7 +1,7 @@
 package com.alaershov.mars_colony.main_screen
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.dashboard_screen.DashboardScreenComponent
+import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent

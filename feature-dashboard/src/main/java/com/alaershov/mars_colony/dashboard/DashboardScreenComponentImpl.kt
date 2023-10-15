@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.dashboard_screen
+package com.alaershov.mars_colony.dashboard
 
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.totalCapacity

@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.dashboard_screen
+package com.alaershov.mars_colony.dashboard
 
 data class DashboardScreenState(
     val totalCapacity: Int,

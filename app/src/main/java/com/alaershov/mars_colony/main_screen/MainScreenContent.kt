@@ -2,7 +2,7 @@ package com.alaershov.mars_colony.main_screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import com.alaershov.mars_colony.dashboard_screen.DashboardScreen
+import com.alaershov.mars_colony.dashboard.DashboardScreen
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreen
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreen
 import com.alaershov.mars_colony.main_screen.MainScreenComponent.Child
