@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class HabitatDismantleDialogComponentImpl(
+class DefaultHabitatDismantleDialogComponent(
     componentContext: ComponentContext,
     habitatId: String,
     private val habitatRepository: HabitatRepository,

@@ -1,14 +1,14 @@
 package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.dashboard.DashboardScreenComponentImpl
+import com.alaershov.mars_colony.dashboard.DefaultDashboardScreenComponent
 import com.alaershov.mars_colony.habitat.HabitatRepository
-import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponentImpl
-import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponentImpl
-import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponentImpl
-import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponentImpl
+import com.alaershov.mars_colony.habitat.build_dialog.DefaultHabitatBuildDialogComponent
+import com.alaershov.mars_colony.habitat.dismantle_dialog.DefaultHabitatDismantleDialogComponent
+import com.alaershov.mars_colony.habitat.info_screen.DefaultHabitatInfoScreenComponent
+import com.alaershov.mars_colony.habitat.list_screen.DefaultHabitatListScreenComponent
 import com.alaershov.mars_colony.power.PowerPlantRepository
-import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponentImpl
+import com.alaershov.mars_colony.power.list_screen.DefaultPowerPlantListScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
 import com.arkivanov.decompose.ComponentContext
@@ -63,7 +63,7 @@ class DefaultRootComponent(
     ) { config, componentContext ->
         when (config) {
             RootBottomSheetConfig.HabitatBuild -> {
-                HabitatBuildDialogComponentImpl(
+                DefaultHabitatBuildDialogComponent(
                     componentContext = componentContext,
                     habitatRepository = HabitatRepository,
                     onDismissed = bottomSheetNavigation::dismiss,
@@ -71,7 +71,7 @@ class DefaultRootComponent(
             }
 
             is RootBottomSheetConfig.HabitatDismantle -> {
-                HabitatDismantleDialogComponentImpl(
+                DefaultHabitatDismantleDialogComponent(
                     componentContext = componentContext,
                     habitatId = config.habitatId,
                     habitatRepository = HabitatRepository,
@@ -91,7 +91,7 @@ class DefaultRootComponent(
     private fun createChild(config: Config, componentContext: ComponentContext): Child {
         return when (config) {
             Config.Dashboard -> Child.Dashboard(
-                DashboardScreenComponentImpl(
+                DefaultDashboardScreenComponent(
                     componentContext = componentContext,
                     habitatRepository = HabitatRepository,
                     powerPlantRepository = PowerPlantRepository,
@@ -105,7 +105,7 @@ class DefaultRootComponent(
             )
 
             Config.HabitatList -> Child.HabitatList(
-                HabitatListScreenComponentImpl(
+                DefaultHabitatListScreenComponent(
                     componentContext = componentContext,
                     habitatRepository = HabitatRepository,
                     onBuildClick = {
@@ -122,14 +122,14 @@ class DefaultRootComponent(
             )
 
             is Config.HabitatInfo -> Child.HabitatInfo(
-                HabitatInfoScreenComponentImpl(
+                DefaultHabitatInfoScreenComponent(
                     componentContext = componentContext,
                     habitatId = config.habitatId
                 )
             )
 
             Config.PowerPlantList -> Child.PowerPlantList(
-                PowerPlantListScreenComponentImpl(
+                DefaultPowerPlantListScreenComponent(
                     componentContext = componentContext
                 )
             )

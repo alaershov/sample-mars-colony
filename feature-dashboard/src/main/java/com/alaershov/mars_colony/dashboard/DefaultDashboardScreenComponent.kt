@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DashboardScreenComponentImpl(
+class DefaultDashboardScreenComponent(
     componentContext: ComponentContext,
     habitatRepository: HabitatRepository,
     powerPlantRepository: PowerPlantRepository,
