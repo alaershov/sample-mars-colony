@@ -65,6 +65,9 @@ dependencies {
 
     implementation project(':ui')
     implementation project(':feature-root')
+    implementation project(':feature-dashboard')
+    implementation project(':feature-habitat')
+    implementation project(':feature-power')
 
     testImplementation 'junit:junit:4.13.2'
 

@@ -32,6 +32,6 @@ interface RootComponent {
     interface Factory {
         fun create(
             componentContext: ComponentContext,
-        ): DefaultRootComponent
+        ): RootComponent
     }
 }

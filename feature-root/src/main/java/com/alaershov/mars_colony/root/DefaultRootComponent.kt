@@ -1,13 +1,12 @@
 package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.dashboard.DefaultDashboardScreenComponent
+import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.build_dialog.DefaultHabitatBuildDialogComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.DefaultHabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.info_screen.DefaultHabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.DefaultHabitatListScreenComponent
-import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.list_screen.DefaultPowerPlantListScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
@@ -30,6 +29,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class DefaultRootComponent @AssistedInject constructor(
+    private val dashboardComponentFactory: DashboardScreenComponent.Factory,
     @Assisted
     private val componentContext: ComponentContext
 ) : RootComponent, ComponentContext by componentContext {
@@ -95,10 +95,8 @@ class DefaultRootComponent @AssistedInject constructor(
     private fun createChild(config: Config, componentContext: ComponentContext): Child {
         return when (config) {
             Config.Dashboard -> Child.Dashboard(
-                DefaultDashboardScreenComponent(
+                dashboardComponentFactory.create(
                     componentContext = componentContext,
-                    habitatRepository = HabitatRepository,
-                    powerPlantRepository = PowerPlantRepository,
                     navigateToHabitatList = {
                         navigation.push(Config.HabitatList)
                     },

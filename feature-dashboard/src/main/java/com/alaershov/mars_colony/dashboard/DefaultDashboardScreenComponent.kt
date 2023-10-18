@@ -5,6 +5,9 @@ import com.alaershov.mars_colony.habitat.totalCapacity
 import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.totalPower
 import com.arkivanov.decompose.ComponentContext
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -14,13 +17,17 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DefaultDashboardScreenComponent(
-    componentContext: ComponentContext,
+class DefaultDashboardScreenComponent @AssistedInject constructor(
     habitatRepository: HabitatRepository,
     powerPlantRepository: PowerPlantRepository,
+    @Assisted
+    componentContext: ComponentContext,
+    @Assisted("navigateToHabitatList")
     private val navigateToHabitatList: () -> Unit,
+    @Assisted("navigateToPowerPlantList")
     private val navigateToPowerPlantList: () -> Unit,
-) : DashboardScreenComponent, ComponentContext by componentContext {
+) : DashboardScreenComponent,
+    ComponentContext by componentContext {
 
     private val _state: MutableStateFlow<DashboardScreenState> = MutableStateFlow(
         DashboardScreenState(
@@ -55,5 +62,16 @@ class DefaultDashboardScreenComponent(
 
     override fun onPowerClick() {
         navigateToPowerPlantList()
+    }
+
+    @AssistedFactory
+    interface Factory : DashboardScreenComponent.Factory {
+        override fun create(
+            componentContext: ComponentContext,
+            @Assisted("navigateToHabitatList")
+            navigateToHabitatList: () -> Unit,
+            @Assisted("navigateToPowerPlantList")
+            navigateToPowerPlantList: () -> Unit,
+        ): DefaultDashboardScreenComponent
     }
 }

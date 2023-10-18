@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -42,6 +43,9 @@ dependencies {
     implementation libs.bundles.compose
 
     implementation libs.bundles.decompose
+
+    implementation libs.dagger.core
+    kapt libs.dagger.compiler
 
     implementation project(':ui')
     implementation project(':bottom-sheet')
