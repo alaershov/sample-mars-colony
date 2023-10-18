@@ -25,8 +25,12 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
-class DefaultRootComponent(
+class DefaultRootComponent @AssistedInject constructor(
+    @Assisted
     private val componentContext: ComponentContext
 ) : RootComponent, ComponentContext by componentContext {
 
@@ -155,5 +159,12 @@ class DefaultRootComponent(
 
         @Parcelize
         data object PowerPlantList : Config()
+    }
+
+    @AssistedFactory
+    interface Factory : RootComponent.Factory {
+        override fun create(
+            componentContext: ComponentContext,
+        ): DefaultRootComponent
     }
 }

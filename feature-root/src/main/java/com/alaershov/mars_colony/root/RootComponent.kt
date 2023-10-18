@@ -5,6 +5,7 @@ import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
+import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
@@ -26,5 +27,11 @@ interface RootComponent {
         class HabitatInfo(val component: HabitatInfoScreenComponent) : Child()
 
         class PowerPlantList(val component: PowerPlantListScreenComponent) : Child()
+    }
+
+    interface Factory {
+        fun create(
+            componentContext: ComponentContext,
+        ): DefaultRootComponent
     }
 }

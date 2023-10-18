@@ -46,6 +46,10 @@ dependencyResolutionManagement {
                             'decompose-extensions-compose-jetpack'
                     ]
             )
+
+            version('dagger', '2.48.1')
+            library('dagger-core', 'com.google.dagger', 'dagger').versionRef('dagger')
+            library('dagger-compiler', 'com.google.dagger', 'dagger-compiler').versionRef('dagger')
         }
     }
 }
