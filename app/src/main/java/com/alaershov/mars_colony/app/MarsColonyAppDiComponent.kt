@@ -7,6 +7,7 @@ import com.alaershov.mars_colony.power.PowerPlantRepositoryDiModule
 import com.alaershov.mars_colony.power.di.PowerComponentDiModule
 import com.alaershov.mars_colony.root.RootComponent
 import com.alaershov.mars_colony.root.di.RootComponentDiModule
+import com.alaershov.mars_colony.shared.weather.di.WeatherDiModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -31,6 +32,7 @@ import javax.inject.Singleton
         PowerComponentDiModule::class,
         HabitatRepositoryDiModule::class,
         PowerPlantRepositoryDiModule::class,
+        WeatherDiModule::class,
     ]
 )
 interface MarsColonyAppDiComponent {

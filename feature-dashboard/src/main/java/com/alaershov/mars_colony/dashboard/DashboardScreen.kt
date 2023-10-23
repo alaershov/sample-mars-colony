@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alaershov.mars_colony.shared.weather.WeatherState
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +30,34 @@ fun DashboardScreen(component: DashboardScreenComponent) {
             text = "Mars Colony Dashboard",
             style = MaterialTheme.typography.headlineLarge
         )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    component.onHabitatClick()
+                }
+                .padding(vertical = 16.dp)
+        ) {
+            val temperature = "%.2f".format(state.weatherState.temperature)
+            val windSpeed = "%.2f".format(state.weatherState.windSpeed)
+            val solarPower = "%.2f".format(state.weatherState.solarPower)
+
+            Text(
+                text = "Temperature: $temperature C",
+                style = MaterialTheme.typography.titleLarge,
+            )
+
+            Text(
+                text = "Wind: $windSpeed m/s",
+                style = MaterialTheme.typography.titleLarge,
+            )
+
+            Text(
+                text = "Solar Power: $solarPower W/m2",
+                style = MaterialTheme.typography.titleLarge,
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -74,7 +103,12 @@ class PreviewDashboardScreenComponent : DashboardScreenComponent {
     override val state: StateFlow<DashboardScreenState> = MutableStateFlow(
         DashboardScreenState(
             totalCapacity = 15,
-            totalPower = 25000
+            totalPower = 25000,
+            weatherState = WeatherState(
+                temperature = 27.5,
+                windSpeed = 4.3,
+                solarPower = 107.9,
+            )
         )
     )
 

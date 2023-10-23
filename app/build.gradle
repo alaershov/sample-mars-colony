@@ -68,6 +68,7 @@ dependencies {
     implementation project(':feature-dashboard')
     implementation project(':feature-habitat')
     implementation project(':feature-power')
+    implementation project(':shared-weather')
 
     testImplementation 'junit:junit:4.13.2'
 

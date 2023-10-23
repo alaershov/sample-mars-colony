@@ -4,6 +4,7 @@ import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.totalCapacity
 import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.totalPower
+import com.alaershov.mars_colony.shared.weather.WeatherRepository
 import com.arkivanov.decompose.ComponentContext
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -37,13 +38,15 @@ class DefaultDashboardScreenComponent @AssistedInject internal constructor(
     // в этом его основная польза - не подставлять зависимости вручную.
     habitatRepository: HabitatRepository,
     powerPlantRepository: PowerPlantRepository,
+    weatherRepository: WeatherRepository,
 ) : DashboardScreenComponent,
     ComponentContext by componentContext {
 
     private val _state: MutableStateFlow<DashboardScreenState> = MutableStateFlow(
         DashboardScreenState(
-            totalCapacity = 0,
-            totalPower = 0
+            totalCapacity = habitatRepository.state.value.totalCapacity,
+            totalPower = powerPlantRepository.state.value.totalPower,
+            weatherState = weatherRepository.state.value
         )
     )
 
@@ -55,10 +58,12 @@ class DefaultDashboardScreenComponent @AssistedInject internal constructor(
         combine(
             habitatRepository.state,
             powerPlantRepository.state,
-        ) { habitatState, powerPlantState ->
+            weatherRepository.state,
+        ) { habitatState, powerPlantState, weatherState ->
             DashboardScreenState(
                 totalCapacity = habitatState.totalCapacity,
                 totalPower = powerPlantState.totalPower,
+                weatherState = weatherState,
             )
         }
             .onEach { dashboardScreenState ->

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.alaershov.mars_colony.habitat'
+    namespace 'com.alaershov.mars_colony.shared.weather'
     compileSdk 34
 
     defaultConfig {
@@ -46,10 +46,4 @@ dependencies {
 
     implementation libs.dagger.core
     kapt libs.dagger.compiler
-
-    implementation project(':ui')
-    implementation project(':bottom-sheet')
-    implementation project(':feature-habitat')
-    implementation project(':feature-power')
-    implementation project(':shared-weather')
 }
