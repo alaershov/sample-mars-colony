@@ -17,7 +17,7 @@ object HabitatRepository {
         get() = _state
 
     suspend fun buildHabitat(capacity: Int) {
-        delay(2000)
+        delay(1000)
         val habitat = Habitat(
             id = UUID.randomUUID().toString(),
             capacity = capacity
