@@ -3,6 +3,9 @@ package com.alaershov.mars_colony.habitat.build_dialog
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentState
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.arkivanov.decompose.ComponentContext
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -10,10 +13,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DefaultHabitatBuildDialogComponent(
-    componentContext: ComponentContext,
+class DefaultHabitatBuildDialogComponent @AssistedInject internal constructor(
     private val habitatRepository: HabitatRepository,
-    private val onDismissed: () -> Unit
+    @Assisted
+    componentContext: ComponentContext,
+    @Assisted("onDismiss")
+    private val onDismiss: () -> Unit
 ) : HabitatBuildDialogComponent, ComponentContext by componentContext {
 
     private val _state = MutableStateFlow(
@@ -55,7 +60,16 @@ class DefaultHabitatBuildDialogComponent(
                 isProgress = false
             )
 
-            onDismissed()
+            onDismiss()
         }
+    }
+
+    @AssistedFactory
+    interface Factory : HabitatBuildDialogComponent.Factory {
+        override fun create(
+            componentContext: ComponentContext,
+            @Assisted("onDismiss")
+            onDismiss: () -> Unit
+        ): DefaultHabitatBuildDialogComponent
     }
 }

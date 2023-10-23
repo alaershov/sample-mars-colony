@@ -17,15 +17,26 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DefaultDashboardScreenComponent @AssistedInject constructor(
-    habitatRepository: HabitatRepository,
-    powerPlantRepository: PowerPlantRepository,
+// Обратите внимание на internal constructor
+// этот компонент можно создать через фабрику,
+// но нельзя из другого модуля напрямую вызвать конструктор.
+class DefaultDashboardScreenComponent @AssistedInject internal constructor(
+    // сначала объявлены "аргументы"
+    // они передаются в фабрику компонента
+    // и подставляются сюда через Assisted Inject
     @Assisted
     componentContext: ComponentContext,
     @Assisted("navigateToHabitatList")
     private val navigateToHabitatList: () -> Unit,
     @Assisted("navigateToPowerPlantList")
     private val navigateToPowerPlantList: () -> Unit,
+
+    // ниже идут зависимости
+    // их не нужно передавать в фабрику компонента
+    // за зависимости отвечает DI
+    // в этом его основная польза - не подставлять зависимости вручную.
+    habitatRepository: HabitatRepository,
+    powerPlantRepository: PowerPlantRepository,
 ) : DashboardScreenComponent,
     ComponentContext by componentContext {
 
@@ -64,10 +75,19 @@ class DefaultDashboardScreenComponent @AssistedInject constructor(
         navigateToPowerPlantList()
     }
 
+    /**
+     * Интерфейс фабрики для AssistedInject через Dagger.
+     *
+     * Он реализует интерфейс фабрики из интерфейса компонента,
+     * и связывается с ним в DashboardComponentModule.
+     */
     @AssistedFactory
     interface Factory : DashboardScreenComponent.Factory {
         override fun create(
             componentContext: ComponentContext,
+            // Аннотации @Assisted("name") нужны, чтобы разрулить
+            // зависимости с одинаковым типом, но разными именами.
+            // Аналогично работает @Named("name") в обычном графе зависимостей.
             @Assisted("navigateToHabitatList")
             navigateToHabitatList: () -> Unit,
             @Assisted("navigateToPowerPlantList")

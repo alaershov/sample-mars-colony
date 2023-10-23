@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface DashboardComponentModule {
+interface DashboardComponentDiModule {
 
     @Binds
     fun componentFactory(impl: DefaultDashboardScreenComponent.Factory): DashboardScreenComponent.Factory

@@ -2,12 +2,11 @@ package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
-import com.alaershov.mars_colony.habitat.HabitatRepository
-import com.alaershov.mars_colony.habitat.build_dialog.DefaultHabitatBuildDialogComponent
-import com.alaershov.mars_colony.habitat.dismantle_dialog.DefaultHabitatDismantleDialogComponent
-import com.alaershov.mars_colony.habitat.info_screen.DefaultHabitatInfoScreenComponent
-import com.alaershov.mars_colony.habitat.list_screen.DefaultHabitatListScreenComponent
-import com.alaershov.mars_colony.power.list_screen.DefaultPowerPlantListScreenComponent
+import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
+import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
+import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
+import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
+import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
 import com.arkivanov.decompose.ComponentContext
@@ -28,10 +27,24 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class DefaultRootComponent @AssistedInject constructor(
-    private val dashboardComponentFactory: DashboardScreenComponent.Factory,
+class DefaultRootComponent @AssistedInject internal constructor(
+    // У корневого компонента только один аргумент - контекст
     @Assisted
-    private val componentContext: ComponentContext
+    private val componentContext: ComponentContext,
+
+    // Кроме контекста, корневому компоненту нужно уметь создавать свои дочерние компоненты
+    // Для этого в конструктор компонента передаются фабрики, с помощью которых можно
+    // создать инстансы дочерних компонентов в нужный момент.
+    //
+    // Нужны только фабрики непосредственно вложенных компонентов
+    // Если в каком-то из них будет своя внутренняя навигация, им точно так же нужно
+    // будет передать фабрики компонентов, участвующих в этой навигации.
+    private val dashboardComponentFactory: DashboardScreenComponent.Factory,
+    private val habitatBuildDialogComponentFactory: HabitatBuildDialogComponent.Factory,
+    private val habitatDismantleDialogComponentFactory: HabitatDismantleDialogComponent.Factory,
+    private val habitatInfoScreenComponentFactory: HabitatInfoScreenComponent.Factory,
+    private val habitatListScreenComponentFactory: HabitatListScreenComponent.Factory,
+    private val powerPlantListScreenComponentFactory: PowerPlantListScreenComponent.Factory,
 ) : RootComponent, ComponentContext by componentContext {
 
     private val backCallback = BackCallback {
@@ -67,18 +80,16 @@ class DefaultRootComponent @AssistedInject constructor(
     ) { config, componentContext ->
         when (config) {
             RootBottomSheetConfig.HabitatBuild -> {
-                DefaultHabitatBuildDialogComponent(
+                habitatBuildDialogComponentFactory.create(
                     componentContext = componentContext,
-                    habitatRepository = HabitatRepository,
-                    onDismissed = bottomSheetNavigation::dismiss,
+                    onDismiss = bottomSheetNavigation::dismiss,
                 )
             }
 
             is RootBottomSheetConfig.HabitatDismantle -> {
-                DefaultHabitatDismantleDialogComponent(
+                habitatDismantleDialogComponentFactory.create(
                     componentContext = componentContext,
                     habitatId = config.habitatId,
-                    habitatRepository = HabitatRepository,
                     onDismiss = bottomSheetNavigation::dismiss,
                 )
             }
@@ -107,9 +118,8 @@ class DefaultRootComponent @AssistedInject constructor(
             )
 
             Config.HabitatList -> Child.HabitatList(
-                DefaultHabitatListScreenComponent(
+                habitatListScreenComponentFactory.create(
                     componentContext = componentContext,
-                    habitatRepository = HabitatRepository,
                     onBuildClick = {
                         bottomSheetNavigation.activate(
                             RootBottomSheetConfig.HabitatBuild
@@ -124,14 +134,14 @@ class DefaultRootComponent @AssistedInject constructor(
             )
 
             is Config.HabitatInfo -> Child.HabitatInfo(
-                DefaultHabitatInfoScreenComponent(
+                habitatInfoScreenComponentFactory.create(
                     componentContext = componentContext,
                     habitatId = config.habitatId
                 )
             )
 
             Config.PowerPlantList -> Child.PowerPlantList(
-                DefaultPowerPlantListScreenComponent(
+                powerPlantListScreenComponentFactory.create(
                     componentContext = componentContext
                 )
             )
@@ -161,6 +171,7 @@ class DefaultRootComponent @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory : RootComponent.Factory {
+
         override fun create(
             componentContext: ComponentContext,
         ): DefaultRootComponent

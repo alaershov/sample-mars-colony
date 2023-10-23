@@ -8,14 +8,16 @@ import com.alaershov.mars_colony.root.RootContent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import com.arkivanov.decompose.defaultComponentContext
 
+/**
+ * Единственное Activity, которое является точкой входа в приложение.
+ */
 class MarsColonyAppActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO сделать Dagger DI, и вынести логику в отдельные модули
-        //  - добавить общий bottomsheet в отдельном модуле
-        //  - добавить навигацию с табами, чтобы было посложнее, и был пример Page навигации Decompose
+        // Единственное место, где мы создаём и напрямую используем Dagger компонент
+        // для того, чтобы создать корневой Decompose-компонент.
         val component: RootComponent = DaggerMarsColonyAppDiComponent.create()
             .rootComponentFactory
             .create(

@@ -10,6 +10,11 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 
+/**
+ * Корневой компонент приложения.
+ *
+ * Все экраны приложения для него являются дочерними компонентами
+ */
 interface RootComponent {
 
     val childStack: Value<ChildStack<*, Child>>

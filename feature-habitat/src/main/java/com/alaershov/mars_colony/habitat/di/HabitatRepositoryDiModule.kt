@@ -1,11 +1,12 @@
-package com.alaershov.mars_colony.habitat
+package com.alaershov.mars_colony.habitat.di
 
+import com.alaershov.mars_colony.habitat.HabitatRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class HabitatRepositoryModule {
+class HabitatRepositoryDiModule {
 
     @Singleton
     @Provides

@@ -1,3 +1,13 @@
 package com.alaershov.mars_colony.power.list_screen
 
-interface PowerPlantListScreenComponent
+import com.arkivanov.decompose.ComponentContext
+
+interface PowerPlantListScreenComponent {
+
+    interface Factory {
+
+        fun create(
+            componentContext: ComponentContext,
+        ): PowerPlantListScreenComponent
+    }
+}

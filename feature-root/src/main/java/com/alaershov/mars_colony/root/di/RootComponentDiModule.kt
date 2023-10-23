@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface RootComponentModule {
+interface RootComponentDiModule {
 
     @Binds
     fun componentFactory(impl: DefaultRootComponent.Factory): RootComponent.Factory

@@ -11,6 +11,11 @@ interface DashboardScreenComponent {
 
     fun onPowerClick()
 
+    /**
+     * Интерфейс фабрики для создания экземпляра этого компонента.
+     *
+     * Не привязан к DI фреймворку и вообще не знает о его существовании.
+     */
     interface Factory {
         fun create(
             componentContext: ComponentContext,
