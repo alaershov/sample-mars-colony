@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 
 /**
  * Обёртка над Material ModalBottomSheetLayout для удобной работы
@@ -83,28 +85,37 @@ fun ChildSlotModalBottomSheetLayout(
 
     // Наблюдение за состоянием слота навигации bottomSheet.
     LaunchedEffect(sheetContentSlot) {
-        Log.d("ChildSlotMBS", "sheetContentSlot effect launch")
+        log("sheetContentSlot effect launch")
         val instance = sheetContentSlot.child?.instance
 
-        Log.d("ChildSlotMBS", "sheetContentSlot change instance $instance")
+        log("sheetContentSlot change instance $instance")
         if (instance == null) {
             // Если слот занулился, то нужно сначала скрыть ModalBottomSheet,
             // а потом занулить latestChildInstance, чтобы на UI во время
             // скрытия отображалось содержимое BottomSheet, несмотря на то, что child уже null.
 
-            // TODO здесь есть баг, который происходит в случае отмены корутины во время hide,
-            //  например, нажали кнопку назад
-            //  latestChildInstance не зануляется, и несмотря на то, что в логическом состоянии
-            //  sheetContentSlot уже null, ботомщит продолжает отображаться.
-            //  возможно это был баг в Compose 1.3.2
-            Log.d("ChildSlotMBS", "instance = null (start hide)")
-            sheetState.hide()
-            latestChildInstance = null
-            Log.d("ChildSlotMBS", "latestChildInstance = null (finish hide)")
+            try {
+                log("hide() start")
+                sheetState.hide()
+                log("hide() finishlatestChildInstance=$latestChildInstance")
+            } catch (e: Exception) {
+                log("hide() exception latestChildInstance=$latestChildInstance", e)
+            } finally {
+                withContext(NonCancellable) {
+                    latestChildInstance = null
+                    log("hide() finally latestChildInstance=null")
+                }
+            }
+            log("latestChildInstance = null (finish hide)")
         } else {
             latestChildInstance = instance
-            Log.d("ChildSlotMBS", "latestChildInstance = $instance (start show)")
-            sheetState.show()
+            try {
+                log("show() start, latestChildInstance=$instance")
+                sheetState.show()
+                log("show() finish latestChildInstance=$instance")
+            } catch (e: Exception) {
+                log("show() exception latestChildInstance=$instance", e)
+            }
         }
     }
 
@@ -143,4 +154,12 @@ fun ChildSlotModalBottomSheetLayout(
         scrimColor = scrimColor,
         content = content
     )
+}
+
+private fun log(message: String, throwable: Throwable? = null) {
+    if (throwable != null) {
+        Log.e("ChildSlotMBS", message, throwable)
+    } else {
+        Log.d("ChildSlotMBS", message)
+    }
 }
