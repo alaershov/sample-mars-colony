@@ -1,6 +1,11 @@
+@file:OptIn(ExperimentalDecomposeApi::class)
+
 package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
+import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.bottomSheetPages
+import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pop
+import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pushNew
 import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
@@ -10,6 +15,9 @@ import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.router.pages.ChildPages
+import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.decompose.router.slot.activate
@@ -28,9 +36,10 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class DefaultRootComponent @AssistedInject internal constructor(
-    // У корневого компонента только один аргумент - контекст
     @Assisted
     private val componentContext: ComponentContext,
+    @Assisted
+    private val isMaterial3BottomSheet: Boolean,
 
     // Кроме контекста, корневому компоненту нужно уметь создавать свои дочерние компоненты
     // Для этого в конструктор компонента передаются фабрики, с помощью которых можно
@@ -48,9 +57,9 @@ class DefaultRootComponent @AssistedInject internal constructor(
 ) : RootComponent, ComponentContext by componentContext {
 
     private val backCallback = BackCallback {
-        val child = bottomSheet.value.child
+        val child = bottomSheetSlot.value.child
         if (child != null && child.instance.bottomSheetContentState.value.isDismissAllowed) {
-            bottomSheetNavigation.dismiss()
+            bottomSheetSlotNavigation.dismiss()
         }
     }
 
@@ -66,39 +75,30 @@ class DefaultRootComponent @AssistedInject internal constructor(
 
     override val childStack: Value<ChildStack<*, Child>> = _childStack
 
-    // интерфейс для запуска действий навигации в слоте BottomSheet
-    private val bottomSheetNavigation = SlotNavigation<RootBottomSheetConfig>()
+    private val bottomSheetSlotNavigation = SlotNavigation<RootBottomSheetConfig>()
 
-    // состояние слота BottomSheet - используется для отрисовки на экране
-    override val bottomSheet: Value<ChildSlot<*, BottomSheetContentComponent>> = childSlot(
-        source = bottomSheetNavigation,
-        // Не нужно персистентное сосотяние диалогов.
-        persistent = false,
-        // Не используем стандартную обработку кнопки "Назад".
-        // Вместо этого делаем кастомную, с учётом isDismissAllowed.
-        handleBackButton = false,
-    ) { config, componentContext ->
-        when (config) {
-            RootBottomSheetConfig.HabitatBuild -> {
-                habitatBuildDialogComponentFactory.create(
-                    componentContext = componentContext,
-                    onDismiss = bottomSheetNavigation::dismiss,
-                )
-            }
+    override val bottomSheetSlot: Value<ChildSlot<*, BottomSheetContentComponent>> =
+        childSlot(
+            source = bottomSheetSlotNavigation,
+            // Не нужно персистентное сосотяние диалогов.
+            persistent = false,
+            // Не используем стандартную обработку кнопки "Назад".
+            // Вместо этого делаем кастомную, с учётом isDismissAllowed.
+            handleBackButton = false,
+            childFactory = ::createBottomSheet,
+        )
 
-            is RootBottomSheetConfig.HabitatDismantle -> {
-                habitatDismantleDialogComponentFactory.create(
-                    componentContext = componentContext,
-                    habitatId = config.habitatId,
-                    onDismiss = bottomSheetNavigation::dismiss,
-                )
-            }
-        }
-    }
+    private val bottomSheetPagesNavigation = PagesNavigation<RootBottomSheetConfig>()
+
+    override val bottomSheetPages: Value<ChildPages<RootBottomSheetConfig, BottomSheetContentComponent>> =
+        bottomSheetPages(
+            source = bottomSheetPagesNavigation,
+            childFactory = ::createBottomSheet,
+        )
 
     init {
         backHandler.register(backCallback)
-        bottomSheet.observe {
+        bottomSheetSlot.observe {
             backCallback.isEnabled = it.child != null
         }
     }
@@ -121,14 +121,10 @@ class DefaultRootComponent @AssistedInject internal constructor(
                 habitatListScreenComponentFactory.create(
                     componentContext = componentContext,
                     onBuildClick = {
-                        bottomSheetNavigation.activate(
-                            RootBottomSheetConfig.HabitatBuild
-                        )
+                        showBottomSheet(RootBottomSheetConfig.HabitatBuild)
                     },
                     onDismantleHabitatClick = { id ->
-                        bottomSheetNavigation.activate(
-                            RootBottomSheetConfig.HabitatDismantle(id)
-                        )
+                        showBottomSheet(RootBottomSheetConfig.HabitatDismantle(id))
                     }
                 )
             )
@@ -148,8 +144,50 @@ class DefaultRootComponent @AssistedInject internal constructor(
         }
     }
 
-    override fun onBottomSheetDismiss() {
-        bottomSheetNavigation.dismiss()
+    private fun createBottomSheet(
+        config: RootBottomSheetConfig,
+        componentContext: ComponentContext
+    ): BottomSheetContentComponent {
+        return when (config) {
+            RootBottomSheetConfig.HabitatBuild -> {
+                habitatBuildDialogComponentFactory.create(
+                    componentContext = componentContext,
+                    onDismiss = ::dismissBottomSheet,
+                )
+            }
+
+            is RootBottomSheetConfig.HabitatDismantle -> {
+                habitatDismantleDialogComponentFactory.create(
+                    componentContext = componentContext,
+                    habitatId = config.habitatId,
+                    onDismiss = ::dismissBottomSheet,
+                )
+            }
+        }
+    }
+
+    private fun showBottomSheet(config: RootBottomSheetConfig) {
+        if (isMaterial3BottomSheet) {
+            bottomSheetPagesNavigation.pushNew(config)
+        } else {
+            bottomSheetSlotNavigation.activate(config)
+        }
+    }
+
+    private fun dismissBottomSheet() {
+        if (isMaterial3BottomSheet) {
+            bottomSheetPagesNavigation.pop()
+        } else {
+            bottomSheetSlotNavigation.dismiss()
+        }
+    }
+
+    override fun onBottomSheetSlotDismiss() {
+        bottomSheetSlotNavigation.dismiss()
+    }
+
+    override fun onBottomSheetPagesDismiss() {
+        bottomSheetPagesNavigation.pop()
     }
 
     private sealed class Config : Parcelable {
@@ -174,6 +212,7 @@ class DefaultRootComponent @AssistedInject internal constructor(
 
         override fun create(
             componentContext: ComponentContext,
+            isMaterial3BottomSheet: Boolean,
         ): DefaultRootComponent
     }
 }

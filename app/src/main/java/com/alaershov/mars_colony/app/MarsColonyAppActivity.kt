@@ -21,7 +21,8 @@ class MarsColonyAppActivity : ComponentActivity() {
         val component: RootComponent = DaggerMarsColonyAppDiComponent.create()
             .rootComponentFactory
             .create(
-                componentContext = defaultComponentContext()
+                componentContext = defaultComponentContext(),
+                isMaterial3BottomSheet = true,
             )
 
         setContent {
