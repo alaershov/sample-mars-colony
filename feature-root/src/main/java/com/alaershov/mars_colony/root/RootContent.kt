@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.bottom_sheet.ChildSlotModalBottomSheetLayout
+import com.alaershov.mars_colony.bottom_sheet.material2.ChildSlotModalBottomSheetLayout
 import com.alaershov.mars_colony.dashboard.PreviewDashboardScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetContent
