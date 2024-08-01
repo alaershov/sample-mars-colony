@@ -20,8 +20,10 @@ import com.arkivanov.decompose.router.pages.ChildPages
 @Stable
 internal class ComponentPagesSheetState {
 
-    private val _componentSheetStateListState: MutableState<List<ComponentSheetState>> = mutableStateOf(listOf())
-    val componentSheetStateListState: State<List<ComponentSheetState>> = _componentSheetStateListState
+    private val _componentSheetStateListState: MutableState<List<ComponentSheetState>> =
+        mutableStateOf(listOf())
+    val componentSheetStateListState: State<List<ComponentSheetState>> =
+        _componentSheetStateListState
 
     /**
      * Обновить список состояний BottomSheet на основе текущего состояния `pages`.
@@ -32,6 +34,9 @@ internal class ComponentPagesSheetState {
      */
     fun update(pages: ChildPages<*, BottomSheetContentComponent>) {
         val oldList = componentSheetStateListState.value
+
+        // сохраняем компоненты изнутри ComponentSheetState старого списка, потому что следующая операция их мутирует
+        val oldComponentList = oldList.map { it.componentState.value }
 
         var newList = pages.items.mapIndexed { index, child ->
             val component = child.instance
@@ -45,12 +50,14 @@ internal class ComponentPagesSheetState {
             componentSheetState
         }
 
+        val newComponentList = newList.map { it.componentState.value }
+
         // Для поддержки анимированного закрытия верхнего боттомщита
         // если видим, что в новом списке компонентов всё то же самое, как в старом,
         // но удалился последний компонент - вместо его удаления зануляем его
         // содержимое в старом списке. Это тригерит анимацию скрытия BottomSheet, после
         // завершения которой стейт обновится ещё раз, и последний пустой компонент удалится.
-        if (oldList.isNotEmpty() && oldList.dropLast(1) == newList) {
+        if (oldComponentList.isNotEmpty() && oldComponentList.dropLast(1) == newComponentList) {
             val lastState = oldList.last()
             if (lastState.componentState.value != null) {
                 lastState.updateComponent(null)

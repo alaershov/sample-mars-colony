@@ -59,4 +59,10 @@ internal class ComponentSheetState(
         result = 31 * result + sheetState.hashCode()
         return result
     }
+
+    override fun toString(): String {
+        return "${this::class.simpleName}@${Integer.toHexString(hashCode())}" +
+                "(componentState=$componentState, " +
+                "sheetState=$sheetState)"
+    }
 }

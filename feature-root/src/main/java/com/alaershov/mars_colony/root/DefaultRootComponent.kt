@@ -7,6 +7,7 @@ import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.bottomS
 import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pop
 import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pushNew
 import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
+import com.alaershov.mars_colony.dashboard.DefaultDashboardScreenComponent
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent

@@ -84,41 +84,47 @@ internal fun ComponentModalBottomSheet(
 
     // Запускаем эффект при изменении состояния слота навигации BottomSheet.
     LaunchedEffect(sheetContentSlot) {
-        val instance = sheetContentComponentState.value
+        log("$key: LaunchedEffect(sheetContentSlot) start $sheetContentSlot")
+
+        val instance = sheetContentSlot
 
         if (instance == null) {
             // Если слот стал пустым (компонент удалился из навигации), то нужно скрыть ModalBottomSheet так,
             // чтобы во время анимации скрытия внутри BottomSheet отображалось
             // содержимое того компонента, который был удален.
             // Для этого мы сначала вызываем hide(), и только после этого зануляем latestChildInstance.
-            try {
-                log("$key: hide(): start, instance=null, latestChildInstance=$latestChildInstance")
-                sheetState.hide()
-                log("$key: hide(): finish, instance=null, latestChildInstance=$latestChildInstance")
-            } catch (e: Exception) {
-                // отмена корутины здесь ожидаемое событие (рекомпозиция и другие причины),
-                // поэтому логируем не как нефатал, а просто как сообщение.
-                log("$key: hide(): exception, instance=null, latestChildInstance=$latestChildInstance", e)
-            } finally {
-                withContext(NonCancellable) {
-                    log("$key: hide(): latestChildInstance = null")
-                    // если корутина, которая делает hide(), отменилась
-                    // всё равно считаем скрытие успешным, и зануляем запомненный компонент
-                    latestChildInstance = null
+            if (sheetState.isVisible) {
+                try {
+                    log("$key: hide(): start, instance=null, latestChildInstance=$latestChildInstance")
+                    sheetState.hide()
+                    log("$key: hide(): finish, instance=null, latestChildInstance=$latestChildInstance")
+                } catch (e: Exception) {
+                    // отмена корутины здесь ожидаемое событие (рекомпозиция и другие причины),
+                    // поэтому логируем не как нефатал, а просто как сообщение.
+                    log("$key: hide(): exception, instance=null, latestChildInstance=$latestChildInstance", e)
                 }
+            } else {
+                log("$key: hide(): ignore because invisible, instance=null, latestChildInstance=$latestChildInstance")
             }
         } else {
             // Если компонент появился в слоте навигации, то запоминаем его для последующего скрытия,
             // и просто открываем BottomSheet, без дополнительных действий.
             latestChildInstance = instance
-            try {
-                log("$key: show(): start, instance=$instance")
-                sheetState.show()
-                log("$key: show(): finish, instance=$instance")
-            } catch (e: Exception) {
-                // отмена корутины здесь ожидаемое событие (рекомпозиция и другие причины),
-                // поэтому логируем не как нефатал, а просто как сообщение.
-                log("$key: show(): exception, instance=$instance", e)
+
+            if (!sheetState.isVisible) {
+                try {
+                    log("$key: show(): start, instance=$instance")
+                    // Задержка нужна, чтобы show() при обычном открытии завершался без исключения
+                    // и мы не закрыли БШ при открытии.
+                    sheetState.show()
+                    log("$key: show(): finish, instance=$instance")
+                } catch (e: Exception) {
+                    // Отмена корутины здесь ожидаемое событие (рекомпозиция и другие причины),
+                    // поэтому логируем не как нефатал, а просто как сообщение.
+                    log("$key: show(): exception, instance=$instance", e)
+                }
+            } else {
+                log("$key: show(): ignore because visible, instance=$instance")
             }
         }
     }
@@ -126,20 +132,47 @@ internal fun ComponentModalBottomSheet(
     // Наблюдение за состоянием UI ModalBottomSheet.
     // Если BottomSheet скрывается, сообщаем об этом компоненту-хосту,
     // чтобы он сделал dismiss, и убрал текущего Child из слота навигации.
-    LaunchedEffect(sheetState, sheetContentSlot) {
-        snapshotFlow { sheetState.isVisible }
-            // Нас интересуют только изменения состояния
-            .distinctUntilChanged()
-            // При композиции мы получаем значение false для состояния Hidden и закрываем боттом шит.
-            // Поэтому нам надо пропускать первое значение состояния, иначае при создании композиции
-            // ChildSlotModalBottomSheetLayout сразу с контентом дилаога, мы сразу закрываем диалог.
+    LaunchedEffect(sheetState) {
+        log("$key: snapshotFlow effect sheetState=$sheetState")
+
+        snapshotFlow {
+            // нас интересует состояние боттомщита: видно ли его, и находится ли он в процессе
+            // движения в сторону открытия или закрытий
+            Triple(
+                sheetState.isVisible,
+                sheetState.targetValue,
+                sheetState.currentValue,
+            )
+        }
+            // При первой композиции мы сразу получаем значение false для состояния Hidden и закрываем боттом шит.
+            // Поэтому нам надо пропускать первое значение состояния, иначае при первой композиции
+            // в ситуации, когда слот сразу непустой, мы сразу закрываем диалог.
             .drop(1)
-            .collect { isVisible ->
-                val instance = sheetContentComponentState.value
-                log("$key: isVisible=$isVisible, instance=$instance")
-                if (!isVisible) {
+            .collect { (isVisible, targetValue, currentValue) ->
+                val instance = sheetContentSlot
+
+                val message = """
+                    |isVisible=$isVisible
+                    |targetValue=$targetValue
+                    |currentValue=$currentValue
+                """.trimMargin()
+
+                log("$key: snapshotFlow $message, instance=$instance")
+
+                // Это состояние означает, что БШ полностью скрыт и никуда не движется
+                val isSheetCompletelyHidden =
+                    !isVisible &&
+                            targetValue == SheetValue.Hidden &&
+                            currentValue == SheetValue.Hidden
+
+                if (isSheetCompletelyHidden) {
+                    // UI компонента закрыт, надо сообщить об этом наружу
                     log("$key: currentOnDismiss(), instance=$instance")
                     currentOnDismiss()
+
+                    log("$key: latestChildInstance = null, instance=$instance")
+                    // очистить временное состояние, которое мы сохраняли на время закрытия
+                    latestChildInstance = null
                 }
             }
     }
