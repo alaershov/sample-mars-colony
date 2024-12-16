@@ -82,3 +82,7 @@ lint/tmp/
 *.hprof
 
 /.idea/other.xml
+/.idea/appInsightsSettings.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/migrations.xml
+/.idea/runConfigurations.xml
