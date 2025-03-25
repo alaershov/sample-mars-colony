@@ -1,5 +1,6 @@
-package com.alaershov.mars_colony.dashboard
+package com.alaershov.mars_colony.dashboard.component
 
+import com.alaershov.mars_colony.dashboard.DashboardScreenState
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.totalCapacity
 import com.alaershov.mars_colony.power.PowerPlantRepository
@@ -81,36 +82,12 @@ class DefaultDashboardScreenComponent @AssistedInject internal constructor(
         navigateToPowerPlantList()
     }
 
-
     fun onRefreshClick() {
         scope.launch {
             habitatRepository.buildHabitat(1)
             // TODO обновить
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Интерфейс фабрики для AssistedInject через Dagger.

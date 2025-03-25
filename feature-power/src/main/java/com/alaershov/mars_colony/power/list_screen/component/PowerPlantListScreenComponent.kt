@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.power.list_screen
+package com.alaershov.mars_colony.power.list_screen.component
 
 import com.arkivanov.decompose.ComponentContext
 

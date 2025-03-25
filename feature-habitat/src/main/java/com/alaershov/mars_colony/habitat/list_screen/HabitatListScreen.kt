@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.alaershov.mars_colony.habitat.list_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,14 +24,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.mars_colony.habitat.Habitat
+import com.alaershov.mars_colony.bottom_sheet.material3.pages.ChildPagesModalBottomSheet
+import com.alaershov.mars_colony.habitat.bottom_sheet.HabitatBottomSheetContent
+import com.alaershov.mars_colony.habitat.list_screen.component.HabitatListScreenComponent
+import com.alaershov.mars_colony.habitat.list_screen.component.PreviewHabitatListScreenComponent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitatListScreen(component: HabitatListScreenComponent) {
+    Box {
+        ScreenContent(component)
+
+        ChildPagesModalBottomSheet(
+            sheetContentPagesState = component.bottomSheetPages,
+            onDismiss = component::onBottomSheetPagesDismiss
+        ) { component ->
+            HabitatBottomSheetContent(component)
+        }
+    }
+}
+
+@Composable
+private fun ScreenContent(
+    component: HabitatListScreenComponent,
+) {
     val state by component.state.collectAsState()
 
     Column(
@@ -112,31 +131,6 @@ fun HabitatListScreen(component: HabitatListScreenComponent) {
             }
         }
     }
-}
-
-class PreviewHabitatListScreenComponent : HabitatListScreenComponent {
-
-    override val state: StateFlow<HabitatListScreenState> = MutableStateFlow(
-        HabitatListScreenState(
-            listOf(
-                Habitat(
-                    id = "1111-1111-1111-1111",
-                    capacity = 40
-                ),
-                Habitat(
-                    id = "2222-2222-2222-2222",
-                    capacity = 20
-                )
-            ),
-            60
-        )
-    )
-
-    override fun onBackClick() {}
-
-    override fun onBuildClick() {}
-
-    override fun onHabitatClick(id: String) {}
 }
 
 @Preview(device = "id:pixel_9")

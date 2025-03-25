@@ -6,8 +6,8 @@ import com.alaershov.mars_colony.habitat.dismantle_dialog.DefaultHabitatDismantl
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.info_screen.DefaultHabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
-import com.alaershov.mars_colony.habitat.list_screen.DefaultHabitatListScreenComponent
-import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
+import com.alaershov.mars_colony.habitat.list_screen.component.DefaultHabitatListScreenComponent
+import com.alaershov.mars_colony.habitat.list_screen.component.HabitatListScreenComponent
 import dagger.Binds
 import dagger.Module
 

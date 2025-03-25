@@ -1,4 +1,4 @@
-package com.alaershov.mars_colony.root.bottom_sheet
+package com.alaershov.mars_colony.habitat.bottom_sheet
 
 import androidx.compose.runtime.Composable
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
@@ -8,7 +8,7 @@ import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialog
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
 
 @Composable
-fun RootBottomSheetContent(component: BottomSheetContentComponent) {
+fun HabitatBottomSheetContent(component: BottomSheetContentComponent) {
     when (component) {
         is HabitatBuildDialogComponent -> {
             HabitatBuildDialog(component)

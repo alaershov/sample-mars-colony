@@ -1,5 +1,6 @@
-package com.alaershov.mars_colony.dashboard
+package com.alaershov.mars_colony.dashboard.component
 
+import com.alaershov.mars_colony.dashboard.DashboardScreenState
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.StateFlow
 

@@ -11,7 +11,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.stack.ChildStack
 
 @Composable
-fun RootScreenContent(
+fun RootNavigation(
     component: RootComponent,
 ) {
     val childStack: ChildStack<*, Child> by component.childStack.subscribeAsState()

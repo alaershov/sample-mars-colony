@@ -1,50 +1,73 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.alaershov.mars_colony.power.list_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alaershov.mars_colony.power.list_screen.component.PowerPlantListScreenComponent
+import com.alaershov.mars_colony.power.list_screen.component.PreviewPowerPlantListScreenComponent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 
 @Composable
 fun PowerPlantListScreen(component: PowerPlantListScreenComponent) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
-        Row {
-            Text(
-                text = "Power Plant List",
-                style = MaterialTheme.typography.headlineLarge
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = {
-                    // TODO
-                }
-            ) {
+        TopAppBar(
+            title = {
                 Text(
-                    text = "Build",
+                    text = "Power Plant List",
+                    style = MaterialTheme.typography.headlineMedium
                 )
+            },
+            navigationIcon = {
+                IconButton(
+                    onClick = {
+                        // TODO
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            },
+            actions = {
+                IconButton(
+                    onClick = {
+                        // TODO
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Build a Habitat"
+                    )
+                }
             }
-        }
-
+        )
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                .padding(16.dp)
         ) {
             Text(
                 text = "Total Power",
@@ -85,9 +108,7 @@ fun PowerPlantListScreen(component: PowerPlantListScreenComponent) {
     }
 }
 
-class PreviewPowerPlantListScreenComponent : PowerPlantListScreenComponent
-
-@Preview(showBackground = true)
+@Preview(device = "id:pixel_9")
 @Composable
 private fun HabitatListScreenPreview() {
     MarsColonyTheme {

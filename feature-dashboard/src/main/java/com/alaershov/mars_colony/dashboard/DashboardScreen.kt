@@ -1,7 +1,9 @@
 package com.alaershov.mars_colony.dashboard
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -12,10 +14,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.mars_colony.shared.weather.WeatherState
+import com.alaershov.mars_colony.dashboard.component.DashboardScreenComponent
+import com.alaershov.mars_colony.dashboard.component.PreviewDashboardScreenComponent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun DashboardScreen(component: DashboardScreenComponent) {
@@ -23,7 +24,8 @@ fun DashboardScreen(component: DashboardScreenComponent) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(16.dp),
     ) {
         Text(
@@ -99,25 +101,7 @@ fun DashboardScreen(component: DashboardScreenComponent) {
     }
 }
 
-class PreviewDashboardScreenComponent : DashboardScreenComponent {
-    override val state: StateFlow<DashboardScreenState> = MutableStateFlow(
-        DashboardScreenState(
-            totalCapacity = 15,
-            totalPower = 25000,
-            weatherState = WeatherState(
-                temperature = 27.5,
-                windSpeed = 4.3,
-                solarPower = 107.9,
-            )
-        )
-    )
-
-    override fun onHabitatClick() {}
-
-    override fun onPowerClick() {}
-}
-
-@Preview(showBackground = true)
+@Preview(device = "id:pixel_9")
 @Composable
 private fun DashboardScreenPreview() {
     MarsColonyTheme {

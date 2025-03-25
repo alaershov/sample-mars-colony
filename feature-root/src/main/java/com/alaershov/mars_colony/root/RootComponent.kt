@@ -1,11 +1,10 @@
 package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
-import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
+import com.alaershov.mars_colony.dashboard.component.DashboardScreenComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
-import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
-import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
-import com.alaershov.mars_colony.root.bottom_sheet.BottomSheetType
+import com.alaershov.mars_colony.habitat.list_screen.component.HabitatListScreenComponent
+import com.alaershov.mars_colony.power.list_screen.component.PowerPlantListScreenComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.slot.ChildSlot
@@ -21,11 +20,7 @@ interface RootComponent {
 
     val childStack: Value<ChildStack<*, Child>>
 
-    val bottomSheetSlot: Value<ChildSlot<*, BottomSheetContentComponent>>
-
     val bottomSheetPages: Value<ChildPages<*, BottomSheetContentComponent>>
-
-    fun onBottomSheetSlotDismiss()
 
     fun onBottomSheetPagesDismiss()
 
@@ -43,7 +38,6 @@ interface RootComponent {
     interface Factory {
         fun create(
             componentContext: ComponentContext,
-            bottomSheetType: BottomSheetType,
         ): RootComponent
     }
 }
