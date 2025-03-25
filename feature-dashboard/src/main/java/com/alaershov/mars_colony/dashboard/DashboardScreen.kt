@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.alaershov.mars_colony.dashboard
 
 import androidx.compose.foundation.background
@@ -6,8 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,11 +31,17 @@ fun DashboardScreen(component: DashboardScreenComponent) {
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(16.dp),
     ) {
-        Text(
-            text = "Mars Colony Dashboard",
-            style = MaterialTheme.typography.headlineLarge
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Mars Colony Dashboard",
+                    style = MaterialTheme.typography.headlineLarge
+                )
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+            )
         )
 
         Column(
@@ -39,7 +50,7 @@ fun DashboardScreen(component: DashboardScreenComponent) {
                 .clickable {
                     component.onHabitatClick()
                 }
-                .padding(vertical = 16.dp)
+                .padding(16.dp)
         ) {
             val temperature = "%.2f".format(state.weatherState.temperature)
             val windSpeed = "%.2f".format(state.weatherState.windSpeed)
@@ -67,7 +78,7 @@ fun DashboardScreen(component: DashboardScreenComponent) {
                 .clickable {
                     component.onHabitatClick()
                 }
-                .padding(vertical = 16.dp)
+                .padding(16.dp)
         ) {
             Text(
                 text = "Total Habitat Capacity",
@@ -86,7 +97,7 @@ fun DashboardScreen(component: DashboardScreenComponent) {
                 .clickable {
                     component.onPowerClick()
                 }
-                .padding(vertical = 16.dp)
+                .padding(16.dp)
         ) {
             Text(
                 text = "Total Power",
