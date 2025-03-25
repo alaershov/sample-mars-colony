@@ -13,12 +13,11 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         libs {
-            library('androidx-core', 'androidx.core:core-ktx:1.12.0')
-            library('androidx-lifecycle-runtime', 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2')
-            library('androidx-activity-compose', 'androidx.activity:activity-compose:1.8.0')
+            library('androidx-core', 'androidx.core:core-ktx:1.15.0')
+            library('androidx-lifecycle-runtime', 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.7')
+            library('androidx-activity-compose', 'androidx.activity:activity-compose:1.10.1')
 
-            version('compose-compiler', '1.5.7')
-            version('androidx-compose-bom', '2024.02.02')
+            version('androidx-compose-bom', '2025.03.00')
             library('androidx-compose-bom', 'androidx.compose', 'compose-bom').versionRef('androidx-compose-bom')
             library('androidx-compose-ui-ui', 'androidx.compose.ui', 'ui').withoutVersion()
             library('androidx-compose-ui-ui-graphics', 'androidx.compose.ui', 'ui-graphics').withoutVersion()
@@ -36,18 +35,18 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('decompose', '2.1.2')
+            version('decompose', '3.3.0')
             library('decompose', 'com.arkivanov.decompose', 'decompose').versionRef('decompose')
-            library('decompose-extensions-compose-jetpack', 'com.arkivanov.decompose', 'extensions-compose-jetpack').versionRef('decompose')
+            library('decompose-extensions-compose', 'com.arkivanov.decompose', 'extensions-compose').versionRef('decompose')
             bundle(
                     'decompose',
                     [
                             'decompose',
-                            'decompose-extensions-compose-jetpack'
+                            'decompose-extensions-compose'
                     ]
             )
 
-            version('dagger', '2.48.1')
+            version('dagger', '2.56')
             library('dagger-core', 'com.google.dagger', 'dagger').versionRef('dagger')
             library('dagger-compiler', 'com.google.dagger', 'dagger-compiler').versionRef('dagger')
         }

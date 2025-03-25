@@ -7,7 +7,7 @@ import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreen
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreen
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreen
 import com.alaershov.mars_colony.root.RootComponent.Child
-import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.stack.ChildStack
 
 @Composable

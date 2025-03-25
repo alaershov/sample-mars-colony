@@ -61,8 +61,8 @@ internal fun ComponentModalBottomSheet(
     tonalElevation: Dp = BottomSheetDefaults.Elevation,
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
     dragHandle: @Composable (() -> Unit)? = { BottomSheetDefaults.DragHandle() },
-    windowInsets: WindowInsets = bottomSheetWindowInsets(),
-    properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties(),
+    contentWindowInsets: @Composable () -> WindowInsets = { BottomSheetDefaults.windowInsets },
+    properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
     content: @Composable (ColumnScope.(BottomSheetContentComponent) -> Unit),
 ) {
     val currentOnDismiss by rememberUpdatedState(onDismiss)
@@ -194,7 +194,7 @@ internal fun ComponentModalBottomSheet(
             tonalElevation = tonalElevation,
             scrimColor = scrimColor,
             dragHandle = dragHandle,
-            windowInsets = windowInsets,
+            contentWindowInsets = contentWindowInsets,
             properties = properties,
             content = {
                 content(childInstance)

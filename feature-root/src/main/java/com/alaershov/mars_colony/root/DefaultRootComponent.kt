@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalDecomposeApi::class)
-
 package com.alaershov.mars_colony.root
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
@@ -7,7 +5,6 @@ import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.bottomS
 import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pop
 import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pushNew
 import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
-import com.alaershov.mars_colony.dashboard.DefaultDashboardScreenComponent
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
@@ -16,7 +13,6 @@ import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.router.slot.ChildSlot
@@ -28,13 +24,13 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.serialization.Serializable
 
 class DefaultRootComponent @AssistedInject internal constructor(
     @Assisted
@@ -69,6 +65,7 @@ class DefaultRootComponent @AssistedInject internal constructor(
     private val _childStack =
         childStack(
             source = navigation,
+            serializer = Config.serializer(),
             initialConfiguration = Config.Dashboard,
             handleBackButton = true, // Pop the back stack on back button press
             childFactory = ::createChild,
@@ -81,8 +78,7 @@ class DefaultRootComponent @AssistedInject internal constructor(
     override val bottomSheetSlot: Value<ChildSlot<*, BottomSheetContentComponent>> =
         childSlot(
             source = bottomSheetSlotNavigation,
-            // Не нужно персистентное сосотяние диалогов.
-            persistent = false,
+            serializer = RootBottomSheetConfig.serializer(),
             // Не используем стандартную обработку кнопки "Назад".
             // Вместо этого делаем кастомную, с учётом isDismissAllowed.
             handleBackButton = false,
@@ -94,12 +90,13 @@ class DefaultRootComponent @AssistedInject internal constructor(
     override val bottomSheetPages: Value<ChildPages<RootBottomSheetConfig, BottomSheetContentComponent>> =
         bottomSheetPages(
             source = bottomSheetPagesNavigation,
+            serializer = RootBottomSheetConfig.serializer(),
             childFactory = ::createBottomSheet,
         )
 
     init {
         backHandler.register(backCallback)
-        bottomSheetSlot.observe {
+        bottomSheetSlot.subscribe {
             backCallback.isEnabled = it.child != null
         }
     }
@@ -110,10 +107,10 @@ class DefaultRootComponent @AssistedInject internal constructor(
                 dashboardComponentFactory.create(
                     componentContext = componentContext,
                     navigateToHabitatList = {
-                        navigation.push(Config.HabitatList)
+                        navigation.pushNew(Config.HabitatList)
                     },
                     navigateToPowerPlantList = {
-                        navigation.push(Config.PowerPlantList)
+                        navigation.pushNew(Config.PowerPlantList)
                     }
                 )
             )
@@ -191,20 +188,21 @@ class DefaultRootComponent @AssistedInject internal constructor(
         bottomSheetPagesNavigation.pop()
     }
 
-    private sealed class Config : Parcelable {
+    @Serializable
+    private sealed class Config {
 
-        @Parcelize
+        @Serializable
         data object Dashboard : Config()
 
-        @Parcelize
+        @Serializable
         data object HabitatList : Config()
 
-        @Parcelize
+        @Serializable
         data class HabitatInfo(
             val habitatId: String
         ) : Config()
 
-        @Parcelize
+        @Serializable
         data object PowerPlantList : Config()
     }
 

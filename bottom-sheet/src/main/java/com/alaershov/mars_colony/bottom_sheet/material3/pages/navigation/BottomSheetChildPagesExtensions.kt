@@ -1,16 +1,14 @@
-@file:OptIn(ExperimentalDecomposeApi::class)
-
 package com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.children.ChildNavState
+import com.arkivanov.decompose.router.children.NavigationSource
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.pages.Pages
-import com.arkivanov.decompose.router.pages.PagesNavigationSource
+import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.router.pages.childPages
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.parcelable.Parcelable
+import kotlinx.serialization.KSerializer
 
 /**
  * Возвращает статус страницы ACTIVE, если она выбрана, и INACTIVE если нет.
@@ -23,31 +21,30 @@ import com.arkivanov.essenty.parcelable.Parcelable
  */
 fun getBottomSheetPageStatus(index: Int, pages: Pages<*>): ChildNavState.Status {
     return if (index == pages.selectedIndex) {
-        ChildNavState.Status.ACTIVE
+        ChildNavState.Status.RESUMED
     } else {
-        ChildNavState.Status.INACTIVE
+        ChildNavState.Status.CREATED
     }
 }
 
 /**
  * Создает ChildPages для использования с BottomSheet.
  */
-inline fun <reified C : Parcelable, T : Any> ComponentContext.bottomSheetPages(
-    source: PagesNavigationSource<C>,
+inline fun <reified C : Any, T : Any> ComponentContext.bottomSheetPages(
+    source: NavigationSource<PagesNavigation.Event<C>>,
+    serializer: KSerializer<C>?,
     noinline initialPages: () -> Pages<C> = { Pages() },
     key: String = "BottomSheetChildPages",
     noinline pageStatus: (index: Int, Pages<C>) -> ChildNavState.Status = ::getBottomSheetPageStatus,
-    persistent: Boolean = false,
     handleBackButton: Boolean = false,
     noinline childFactory: (configuration: C, ComponentContext) -> T,
 ): Value<ChildPages<C, T>> =
     childPages(
         source = source,
+        serializer = serializer,
         initialPages = initialPages,
-        configurationClass = C::class,
         key = key,
         pageStatus = pageStatus,
-        persistent = persistent,
         handleBackButton = handleBackButton,
         childFactory = childFactory,
     )

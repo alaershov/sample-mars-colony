@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalDecomposeApi::class)
-
 package com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation
 
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.pages.PagesNavigator
 
 /**

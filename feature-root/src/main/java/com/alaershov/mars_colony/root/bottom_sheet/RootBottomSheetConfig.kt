@@ -1,14 +1,14 @@
 package com.alaershov.mars_colony.root.bottom_sheet
 
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
+import kotlinx.serialization.Serializable
 
-sealed class RootBottomSheetConfig : Parcelable {
+@Serializable
+sealed class RootBottomSheetConfig {
 
-    @Parcelize
+    @Serializable
     data object HabitatBuild : RootBottomSheetConfig()
 
-    @Parcelize
+    @Serializable
     data class HabitatDismantle(
         val habitatId: String
     ) : RootBottomSheetConfig()
