@@ -1,19 +1,21 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-parcelize'
-    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.compose'
+    id 'com.google.devtools.ksp'
 }
 
 android {
     namespace 'com.alaershov.mars_colony'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.alaershov.mars_colony"
 
         minSdk 26
-        targetSdk 34
+        targetSdk 35
 
         versionCode 1
         versionName "1.0"
@@ -34,14 +36,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
     }
     packagingOptions {
         resources {
@@ -61,7 +59,7 @@ dependencies {
     implementation libs.bundles.decompose
 
     implementation libs.dagger.core
-    kapt libs.dagger.compiler
+    ksp libs.dagger.compiler
 
     implementation project(':ui')
     implementation project(':feature-root')
@@ -72,8 +70,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     androidTestImplementation platform(libs.androidx.compose.bom)
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
 

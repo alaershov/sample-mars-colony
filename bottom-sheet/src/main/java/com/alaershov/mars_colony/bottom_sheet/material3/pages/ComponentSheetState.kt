@@ -7,6 +7,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.Density
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 
 /**
@@ -20,12 +21,14 @@ import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 @Stable
 internal class ComponentSheetState(
     initialComponent: BottomSheetContentComponent?,
+    density: Density,
 ) {
     private val _componentState: MutableState<BottomSheetContentComponent?> = mutableStateOf(initialComponent)
     val componentState: State<BottomSheetContentComponent?> = _componentState
 
     val sheetState: SheetState = SheetState(
         skipPartiallyExpanded = true,
+        density = density,
         initialValue = SheetValue.Hidden,
         confirmValueChange = { sheetValue ->
             if (sheetValue == SheetValue.Hidden) {

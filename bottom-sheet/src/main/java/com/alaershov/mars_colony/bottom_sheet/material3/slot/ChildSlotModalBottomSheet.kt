@@ -17,8 +17,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.bottom_sheet.material3.ComponentModalBottomSheet
-import com.alaershov.mars_colony.bottom_sheet.material3.bottomSheetWindowInsets
-import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
 
@@ -42,7 +41,7 @@ fun ChildSlotModalBottomSheet(
     tonalElevation: Dp = BottomSheetDefaults.Elevation,
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
     dragHandle: @Composable (() -> Unit)? = { BottomSheetDefaults.DragHandle() },
-    windowInsets: WindowInsets = bottomSheetWindowInsets(),
+    contentWindowInsets: @Composable () -> WindowInsets = { BottomSheetDefaults.windowInsets },
     content: @Composable (ColumnScope.(BottomSheetContentComponent) -> Unit),
 ) {
     val sheetContentSlot: ChildSlot<*, BottomSheetContentComponent> by sheetContentSlotState.subscribeAsState()
@@ -61,8 +60,8 @@ fun ChildSlotModalBottomSheet(
         tonalElevation = tonalElevation,
         scrimColor = scrimColor,
         dragHandle = dragHandle,
-        windowInsets = windowInsets,
-        properties = ModalBottomSheetDefaults.properties(),
+        contentWindowInsets = contentWindowInsets,
+        properties = ModalBottomSheetDefaults.properties,
         content = content,
     )
 }

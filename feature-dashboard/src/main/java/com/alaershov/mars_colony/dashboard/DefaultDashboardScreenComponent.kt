@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 // Обратите внимание на internal constructor
 // этот компонент можно создать через фабрику,
@@ -36,9 +37,9 @@ class DefaultDashboardScreenComponent @AssistedInject internal constructor(
     // их не нужно передавать в фабрику компонента
     // за зависимости отвечает DI
     // в этом его основная польза - не подставлять зависимости вручную.
-    habitatRepository: HabitatRepository,
-    powerPlantRepository: PowerPlantRepository,
-    weatherRepository: WeatherRepository,
+    private val habitatRepository: HabitatRepository,
+    private val powerPlantRepository: PowerPlantRepository,
+    private val weatherRepository: WeatherRepository,
 ) : DashboardScreenComponent,
     ComponentContext by componentContext {
 
@@ -79,6 +80,37 @@ class DefaultDashboardScreenComponent @AssistedInject internal constructor(
     override fun onPowerClick() {
         navigateToPowerPlantList()
     }
+
+
+    fun onRefreshClick() {
+        scope.launch {
+            habitatRepository.buildHabitat(1)
+            // TODO обновить
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Интерфейс фабрики для AssistedInject через Dagger.

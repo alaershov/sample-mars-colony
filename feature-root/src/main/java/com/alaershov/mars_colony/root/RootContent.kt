@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalDecomposeApi::class)
-
 package com.alaershov.mars_colony.root
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +15,6 @@ import com.alaershov.mars_colony.dashboard.PreviewDashboardScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetContent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack

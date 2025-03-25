@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalDecomposeApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.alaershov.mars_colony.bottom_sheet.material3.pages
 
@@ -14,12 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.bottom_sheet.material3.ComponentModalBottomSheet
-import com.alaershov.mars_colony.bottom_sheet.material3.bottomSheetWindowInsets
-import com.arkivanov.decompose.ExperimentalDecomposeApi
-import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.value.Value
 
@@ -44,7 +43,7 @@ fun ChildPagesModalBottomSheet(
     tonalElevation: Dp = BottomSheetDefaults.Elevation,
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
     dragHandle: @Composable (() -> Unit)? = { BottomSheetDefaults.DragHandle() },
-    windowInsets: WindowInsets = bottomSheetWindowInsets(),
+    contentWindowInsets: @Composable () -> WindowInsets = { BottomSheetDefaults.windowInsets },
     content: @Composable (ColumnScope.(BottomSheetContentComponent) -> Unit),
 ) {
     // наблюдаем за состоянияем ChildPages
@@ -52,8 +51,10 @@ fun ChildPagesModalBottomSheet(
     val sheetContentStack: ChildPages<*, BottomSheetContentComponent> by sheetContentPagesState.subscribeAsState()
 
     // инициализируем и запоминаем состояние всех BottomSheet в этом стеке навигации
-    val state = remember(sheetContentPagesState) {
-        ComponentPagesSheetState()
+    val density = LocalDensity.current
+
+    val state = remember(sheetContentPagesState, density) {
+        ComponentPagesSheetState(density)
     }
     // обновляем это состояние при каждом изменении стека навигации
     LaunchedEffect(sheetContentStack) {
@@ -93,8 +94,8 @@ fun ChildPagesModalBottomSheet(
             tonalElevation = tonalElevation,
             scrimColor = scrimColor,
             dragHandle = dragHandle,
-            windowInsets = windowInsets,
-            properties = ModalBottomSheetDefaults.properties(),
+            contentWindowInsets = contentWindowInsets,
+            properties = ModalBottomSheetDefaults.properties,
             content = content,
         )
     }

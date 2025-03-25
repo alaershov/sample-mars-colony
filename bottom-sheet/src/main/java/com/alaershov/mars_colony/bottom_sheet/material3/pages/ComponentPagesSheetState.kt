@@ -4,8 +4,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.Density
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.pages.ChildPages
 
 /**
@@ -16,9 +16,10 @@ import com.arkivanov.decompose.router.pages.ChildPages
  * логического состояния `pages`, а вместо этого хранит запомненные инстансы UI стейтов,
  * и обновляет их так, чтобы BottomSheet не пересоздавались при обновлении `pages`.
  */
-@OptIn(ExperimentalDecomposeApi::class)
 @Stable
-internal class ComponentPagesSheetState {
+internal class ComponentPagesSheetState(
+    private val density: Density
+) {
 
     private val _componentSheetStateListState: MutableState<List<ComponentSheetState>> =
         mutableStateOf(listOf())
@@ -46,6 +47,7 @@ internal class ComponentPagesSheetState {
             val componentSheetState = oldList.getOrNull(index)?.apply { updateComponent(component) }
                 ?: ComponentSheetState(
                     initialComponent = component,
+                    density = density,
                 )
             componentSheetState
         }
