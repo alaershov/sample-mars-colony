@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.onEach
 class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
     @Assisted
     componentContext: ComponentContext,
+    @Assisted("onBackClick")
+    private val onBackClick: () -> Unit,
     @Assisted("onBuildClick")
     private val onBuildClick: () -> Unit,
     @Assisted("onDismantleHabitatClick")
@@ -46,6 +48,10 @@ class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
             .launchIn(scope)
     }
 
+    override fun onBackClick() {
+        onBackClick.invoke()
+    }
+
     override fun onBuildClick() {
         onBuildClick.invoke()
     }
@@ -59,6 +65,8 @@ class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
 
         override fun create(
             componentContext: ComponentContext,
+            @Assisted("onBackClick")
+            onBackClick: () -> Unit,
             @Assisted("onBuildClick")
             onBuildClick: () -> Unit,
             @Assisted("onDismantleHabitatClick")

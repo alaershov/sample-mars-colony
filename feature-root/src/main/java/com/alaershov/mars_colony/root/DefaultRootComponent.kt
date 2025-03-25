@@ -24,6 +24,7 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
@@ -118,6 +119,9 @@ class DefaultRootComponent @AssistedInject internal constructor(
             Config.HabitatList -> Child.HabitatList(
                 habitatListScreenComponentFactory.create(
                     componentContext = componentContext,
+                    onBackClick = {
+                        navigation.pop()
+                    },
                     onBuildClick = {
                         showBottomSheet(RootBottomSheetConfig.HabitatBuild)
                     },

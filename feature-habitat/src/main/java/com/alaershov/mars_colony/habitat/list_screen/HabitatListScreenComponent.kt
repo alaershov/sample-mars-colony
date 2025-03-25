@@ -7,6 +7,8 @@ interface HabitatListScreenComponent {
 
     val state: StateFlow<HabitatListScreenState>
 
+    fun onBackClick()
+
     fun onBuildClick()
 
     fun onHabitatClick(id: String)
@@ -15,6 +17,7 @@ interface HabitatListScreenComponent {
 
         fun create(
             componentContext: ComponentContext,
+            onBackClick: () -> Unit,
             onBuildClick: () -> Unit,
             onDismantleHabitatClick: (String) -> Unit,
         ): HabitatListScreenComponent
