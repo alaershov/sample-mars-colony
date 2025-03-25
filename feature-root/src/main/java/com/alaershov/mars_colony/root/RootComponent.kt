@@ -5,6 +5,7 @@ import com.alaershov.mars_colony.dashboard.DashboardScreenComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
+import com.alaershov.mars_colony.root.bottom_sheet.BottomSheetType
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.slot.ChildSlot
@@ -42,7 +43,7 @@ interface RootComponent {
     interface Factory {
         fun create(
             componentContext: ComponentContext,
-            isMaterial3BottomSheet: Boolean,
+            bottomSheetType: BottomSheetType,
         ): RootComponent
     }
 }

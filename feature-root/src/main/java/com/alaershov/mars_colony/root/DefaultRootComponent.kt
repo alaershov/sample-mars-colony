@@ -11,6 +11,7 @@ import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenComponent
 import com.alaershov.mars_colony.power.list_screen.PowerPlantListScreenComponent
 import com.alaershov.mars_colony.root.RootComponent.Child
+import com.alaershov.mars_colony.root.bottom_sheet.BottomSheetType
 import com.alaershov.mars_colony.root.bottom_sheet.RootBottomSheetConfig
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
@@ -23,7 +24,6 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
@@ -36,7 +36,7 @@ class DefaultRootComponent @AssistedInject internal constructor(
     @Assisted
     private val componentContext: ComponentContext,
     @Assisted
-    private val isMaterial3BottomSheet: Boolean,
+    private val bottomSheetType: BottomSheetType,
 
     // Кроме контекста, корневому компоненту нужно уметь создавать свои дочерние компоненты
     // Для этого в конструктор компонента передаются фабрики, с помощью которых можно
@@ -165,18 +165,34 @@ class DefaultRootComponent @AssistedInject internal constructor(
     }
 
     private fun showBottomSheet(config: RootBottomSheetConfig) {
-        if (isMaterial3BottomSheet) {
-            bottomSheetPagesNavigation.pushNew(config)
-        } else {
-            bottomSheetSlotNavigation.activate(config)
+        when (bottomSheetType) {
+            BottomSheetType.MATERIAL_2 -> {
+                bottomSheetSlotNavigation.activate(config)
+            }
+
+            BottomSheetType.MATERIAL_3 -> {
+                bottomSheetPagesNavigation.pushNew(config)
+            }
+
+            BottomSheetType.UNSTYLED -> {
+                // TODO
+            }
         }
     }
 
     private fun dismissBottomSheet() {
-        if (isMaterial3BottomSheet) {
-            bottomSheetPagesNavigation.pop()
-        } else {
-            bottomSheetSlotNavigation.dismiss()
+        when (bottomSheetType) {
+            BottomSheetType.MATERIAL_2 -> {
+                bottomSheetSlotNavigation.dismiss()
+            }
+
+            BottomSheetType.MATERIAL_3 -> {
+                bottomSheetPagesNavigation.pop()
+            }
+
+            BottomSheetType.UNSTYLED -> {
+                // TODO
+            }
         }
     }
 
@@ -211,7 +227,7 @@ class DefaultRootComponent @AssistedInject internal constructor(
 
         override fun create(
             componentContext: ComponentContext,
-            isMaterial3BottomSheet: Boolean,
+            bottomSheetType: BottomSheetType,
         ): DefaultRootComponent
     }
 }

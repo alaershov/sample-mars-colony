@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.alaershov.mars_colony.root.RootComponent
 import com.alaershov.mars_colony.root.RootContent
+import com.alaershov.mars_colony.root.bottom_sheet.BottomSheetType
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import com.arkivanov.decompose.defaultComponentContext
 
@@ -22,7 +23,7 @@ class MarsColonyAppActivity : ComponentActivity() {
             .rootComponentFactory
             .create(
                 componentContext = defaultComponentContext(),
-                isMaterial3BottomSheet = true,
+                bottomSheetType = BottomSheetType.MATERIAL_3
             )
 
         setContent {
