@@ -7,9 +7,11 @@ import com.alaershov.mars_colony.bottom_sheet.material3.pages.navigation.pushNew
 import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.bottom_sheet.HabitatBottomSheetConfig
 import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
-import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogComponent
+import com.alaershov.mars_colony.habitat.dismantle_dialog.component.HabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.list_screen.HabitatListScreenState
 import com.alaershov.mars_colony.habitat.totalCapacity
+import com.alaershov.mars_colony.message_dialog.MessageDialogState
+import com.alaershov.mars_colony.message_dialog.component.MessageDialogComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.pages.PagesNavigation
@@ -33,6 +35,7 @@ class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
     habitatRepository: HabitatRepository,
     private val habitatBuildDialogComponentFactory: HabitatBuildDialogComponent.Factory,
     private val habitatDismantleDialogComponentFactory: HabitatDismantleDialogComponent.Factory,
+    private val messageDialogComponentFactory: MessageDialogComponent.Factory,
 ) : HabitatListScreenComponent, ComponentContext by componentContext {
 
     private val _state = MutableStateFlow(
@@ -82,10 +85,37 @@ class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
                 habitatDismantleDialogComponentFactory.create(
                     componentContext = componentContext,
                     habitatId = config.habitatId,
+                    onConfirmationNeeded = {
+                        bottomSheetPagesNavigation.pushNew(HabitatBottomSheetConfig.ConfirmDismantle)
+                    },
                     onDismiss = ::dismissBottomSheet,
                 )
             }
+
+            is HabitatBottomSheetConfig.ConfirmDismantle -> {
+                messageDialogComponentFactory.create(
+                    componentContext = componentContext,
+                    dialogState = MessageDialogState(
+                        message = "Are you sure?",
+                        button = "Yes, dismantle!"
+                    ),
+                    onButtonClick = {
+                        dismissBottomSheet()
+                        confirmDismantle()
+                    },
+                )
+            }
         }
+    }
+
+    private fun confirmDismantle() {
+        val dismantleDialogComponent = bottomSheetPages.value.items
+            .map { it.instance }
+            .findLast {
+                it is HabitatDismantleDialogComponent
+            } as? HabitatDismantleDialogComponent
+
+        dismantleDialogComponent?.confirm()
     }
 
     override fun onBackClick() {

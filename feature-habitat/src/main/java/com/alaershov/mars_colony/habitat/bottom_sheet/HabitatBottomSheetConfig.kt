@@ -12,4 +12,7 @@ sealed class HabitatBottomSheetConfig {
     data class HabitatDismantle(
         val habitatId: String
     ) : HabitatBottomSheetConfig()
+
+    @Serializable
+    data object ConfirmDismantle : HabitatBottomSheetConfig()
 }

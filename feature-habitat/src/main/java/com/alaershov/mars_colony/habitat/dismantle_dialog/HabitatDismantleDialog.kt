@@ -1,5 +1,6 @@
 package com.alaershov.mars_colony.habitat.dismantle_dialog
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,11 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentState
-import com.alaershov.mars_colony.habitat.Habitat
+import com.alaershov.mars_colony.habitat.dismantle_dialog.component.HabitatDismantleDialogComponent
+import com.alaershov.mars_colony.habitat.dismantle_dialog.component.PreviewHabitatDismantleDialogComponent
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HabitatDismantleDialog(component: HabitatDismantleDialogComponent) {
@@ -27,6 +26,7 @@ fun HabitatDismantleDialog(component: HabitatDismantleDialogComponent) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp),
     ) {
         Text(
@@ -57,7 +57,7 @@ fun HabitatDismantleDialog(component: HabitatDismantleDialogComponent) {
 
         Button(
             onClick = {
-                component.onConfirmClick()
+                component.onDismantleClick()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -68,25 +68,7 @@ fun HabitatDismantleDialog(component: HabitatDismantleDialogComponent) {
     }
 }
 
-class PreviewHabitatDismantleDialogComponent : HabitatDismantleDialogComponent {
-
-    override val state: StateFlow<HabitatDismantleDialogState> = MutableStateFlow(
-        HabitatDismantleDialogState(
-            habitat = Habitat(
-                id = "1111-1111-1111-1111",
-                capacity = 15,
-            ),
-            capacityCurrent = 60,
-            capacityAfterDismantle = 45,
-        )
-    )
-
-    override val bottomSheetContentState: StateFlow<BottomSheetContentState> = state
-
-    override fun onConfirmClick() {}
-}
-
-@Preview(showBackground = true)
+@Preview(device = "id:pixel_9")
 @Composable
 private fun HabitatDismantleDialogPreview() {
     MarsColonyTheme {

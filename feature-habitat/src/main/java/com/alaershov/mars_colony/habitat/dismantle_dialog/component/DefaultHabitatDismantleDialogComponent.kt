@@ -1,7 +1,8 @@
-package com.alaershov.mars_colony.habitat.dismantle_dialog
+package com.alaershov.mars_colony.habitat.dismantle_dialog.component
 
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentState
 import com.alaershov.mars_colony.habitat.HabitatRepository
+import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogState
 import com.alaershov.mars_colony.habitat.totalCapacity
 import com.arkivanov.decompose.ComponentContext
 import dagger.assisted.Assisted
@@ -20,6 +21,8 @@ class DefaultHabitatDismantleDialogComponent @AssistedInject internal constructo
     componentContext: ComponentContext,
     @Assisted("habitatId")
     habitatId: String,
+    @Assisted("onConfirmationNeeded")
+    private val onConfirmationNeeded: () -> Unit,
     @Assisted("onDismiss")
     private val onDismiss: () -> Unit,
     private val habitatRepository: HabitatRepository,
@@ -52,7 +55,12 @@ class DefaultHabitatDismantleDialogComponent @AssistedInject internal constructo
             .launchIn(scope)
     }
 
-    override fun onConfirmClick() {
+    override fun onDismantleClick() {
+        onConfirmationNeeded()
+
+    }
+
+    override fun confirm() {
         state.value.habitat?.id?.let { id ->
             habitatRepository.dismantleHabitat(id)
         }
@@ -66,6 +74,8 @@ class DefaultHabitatDismantleDialogComponent @AssistedInject internal constructo
             componentContext: ComponentContext,
             @Assisted("habitatId")
             habitatId: String,
+            @Assisted("onConfirmationNeeded")
+            onConfirmationNeeded: () -> Unit,
             @Assisted("onDismiss")
             onDismiss: () -> Unit,
         ): DefaultHabitatDismantleDialogComponent

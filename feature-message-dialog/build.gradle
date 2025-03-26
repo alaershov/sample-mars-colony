@@ -4,11 +4,12 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
+    id 'org.jetbrains.kotlin.plugin.serialization'
     id 'com.google.devtools.ksp'
 }
 
 android {
-    namespace 'com.alaershov.mars_colony.power'
+    namespace 'com.alaershov.mars_colony.message_dialog'
     compileSdk 35
 
     defaultConfig {
