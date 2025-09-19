@@ -10,6 +10,7 @@
         android:theme="@style/Theme.MarsColony">
         <activity
             android:name=".app.MarsColonyAppActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.MarsColony">
             <intent-filter>

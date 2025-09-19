@@ -8,22 +8,19 @@ plugins {
 }
 
 android {
-    namespace 'com.alaershov.mars_colony'
-    compileSdk 35
+    namespace = 'com.alaershov.mars_colony'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "com.alaershov.mars_colony"
+        applicationId = "com.alaershov.mars_colony"
 
-        minSdk 26
-        targetSdk 35
+        minSdk = 26
+        targetSdk = 36
 
-        versionCode 1
-        versionName "1.0"
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -33,8 +30,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlin {
         compilerOptions {
@@ -71,8 +68,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     androidTestImplementation platform(libs.androidx.compose.bom)
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
 

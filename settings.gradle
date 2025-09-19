@@ -13,11 +13,11 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         libs {
-            library('androidx-core', 'androidx.core:core-ktx:1.15.0')
-            library('androidx-lifecycle-runtime', 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.7')
-            library('androidx-activity-compose', 'androidx.activity:activity-compose:1.10.1')
+            library('androidx-core', 'androidx.core:core-ktx:1.17.0')
+            library('androidx-lifecycle-runtime', 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.4')
+            library('androidx-activity-compose', 'androidx.activity:activity-compose:1.11.0')
 
-            version('androidx-compose-bom', '2025.03.00')
+            version('androidx-compose-bom', '2025.09.00')
             library('androidx-compose-bom', 'androidx.compose', 'compose-bom').versionRef('androidx-compose-bom')
             library('androidx-compose-ui-ui', 'androidx.compose.ui', 'ui').withoutVersion()
             library('androidx-compose-ui-ui-tooling', 'androidx.compose.ui', 'ui-tooling').withoutVersion()
@@ -44,7 +44,7 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('dagger', '2.56')
+            version('dagger', '2.57.1')
             library('dagger-core', 'com.google.dagger', 'dagger').versionRef('dagger')
             library('dagger-compiler', 'com.google.dagger', 'dagger-compiler').versionRef('dagger')
         }
