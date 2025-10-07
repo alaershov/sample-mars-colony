@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace 'com.alaershov.mars_colony.bottom_sheet'
-    compileSdk 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk 26
