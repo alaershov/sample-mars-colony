@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DefaultHabitatBuildDialogComponent @AssistedInject internal constructor(
+class DefaultHabitatBuildDialogComponent @AssistedInject constructor(
     @Assisted
     componentContext: ComponentContext,
     @Assisted("onDismiss")

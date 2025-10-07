@@ -5,7 +5,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class DefaultPowerPlantListScreenComponent @AssistedInject internal constructor(
+class DefaultPowerPlantListScreenComponent @AssistedInject constructor(
     @Assisted
     componentContext: ComponentContext,
 ) : PowerPlantListScreenComponent, ComponentContext by componentContext {

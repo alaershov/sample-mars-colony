@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 // Обратите внимание на internal constructor
 // этот компонент можно создать через фабрику,
 // но нельзя из другого модуля напрямую вызвать конструктор.
-class DefaultDashboardScreenComponent @AssistedInject internal constructor(
+class DefaultDashboardScreenComponent @AssistedInject constructor(
     // сначала объявлены "аргументы"
     // они передаются в фабрику компонента
     // и подставляются сюда через Assisted Inject

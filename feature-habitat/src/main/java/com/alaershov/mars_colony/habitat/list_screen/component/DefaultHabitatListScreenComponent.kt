@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
+class DefaultHabitatListScreenComponent @AssistedInject constructor(
     @Assisted
     componentContext: ComponentContext,
     @Assisted("onBackClick")

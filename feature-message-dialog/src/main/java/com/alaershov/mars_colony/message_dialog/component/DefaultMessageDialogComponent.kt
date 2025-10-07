@@ -7,7 +7,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class DefaultMessageDialogComponent @AssistedInject internal constructor(
+class DefaultMessageDialogComponent @AssistedInject constructor(
     @Assisted
     componentContext: ComponentContext,
     @Assisted

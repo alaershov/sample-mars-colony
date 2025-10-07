@@ -5,7 +5,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class DefaultHabitatInfoScreenComponent @AssistedInject internal constructor(
+class DefaultHabitatInfoScreenComponent @AssistedInject constructor(
     @Assisted
     componentContext: ComponentContext,
     @Assisted

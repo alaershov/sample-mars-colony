@@ -39,7 +39,6 @@ dependencies {
     implementation libs.bundles.decompose
 
     implementation libs.dagger.core
-    ksp libs.dagger.compiler
 
     implementation project(':ui')
     implementation project(':bottom-sheet')
