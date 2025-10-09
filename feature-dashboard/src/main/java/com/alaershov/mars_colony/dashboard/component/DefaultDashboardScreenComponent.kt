@@ -82,12 +82,4 @@ class DefaultDashboardScreenComponent internal constructor(
             // TODO обновить
         }
     }
-
-    /**
-     * Интерфейс фабрики для AssistedInject через Dagger.
-     *
-     * Он реализует интерфейс фабрики из интерфейса компонента,
-     * и связывается с ним в DashboardComponentModule.
-     */
-    interface Factory : DashboardScreenComponent.Factory
 }

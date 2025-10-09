@@ -59,6 +59,4 @@ class DefaultHabitatDismantleDialogComponent internal constructor(
         }
         onDismiss()
     }
-
-    interface Factory : HabitatDismantleDialogComponent.Factory
 }

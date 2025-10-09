@@ -6,7 +6,4 @@ import com.arkivanov.decompose.ComponentContext
 class DefaultHabitatInfoScreenComponent internal constructor(
     componentContext: ComponentContext,
     habitatId: String
-) : HabitatInfoScreenComponent, ComponentContext by componentContext {
-
-    interface Factory : HabitatInfoScreenComponent.Factory
-}
+) : HabitatInfoScreenComponent, ComponentContext by componentContext

@@ -132,6 +132,4 @@ class DefaultHabitatListScreenComponent internal constructor(
     private fun dismissBottomSheet() {
         bottomSheetPagesNavigation.pop()
     }
-
-    interface Factory : HabitatListScreenComponent.Factory
 }

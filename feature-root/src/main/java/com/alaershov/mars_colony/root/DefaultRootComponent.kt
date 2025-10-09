@@ -132,6 +132,4 @@ class DefaultRootComponent internal constructor(
         @Serializable
         data object PowerPlantList : Config()
     }
-
-    interface Factory : RootComponent.Factory
 }

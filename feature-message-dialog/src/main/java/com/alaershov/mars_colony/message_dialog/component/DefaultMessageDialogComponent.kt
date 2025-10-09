@@ -17,6 +17,4 @@ class DefaultMessageDialogComponent internal constructor(
     override fun onButtonClick() {
         onButtonClick.invoke()
     }
-
-    interface Factory : MessageDialogComponent.Factory
 }

@@ -4,7 +4,4 @@ import com.arkivanov.decompose.ComponentContext
 
 class DefaultPowerPlantListScreenComponent internal constructor(
     componentContext: ComponentContext,
-) : PowerPlantListScreenComponent, ComponentContext by componentContext {
-
-    interface Factory : PowerPlantListScreenComponent.Factory
-}
+) : PowerPlantListScreenComponent, ComponentContext by componentContext

@@ -58,6 +58,4 @@ class DefaultHabitatBuildDialogComponent internal constructor(
             onDismiss()
         }
     }
-
-    interface Factory : HabitatBuildDialogComponent.Factory
 }
