@@ -16,9 +16,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.value.Value
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,10 +24,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
-    @Assisted
+class DefaultHabitatListScreenComponent internal constructor(
     componentContext: ComponentContext,
-    @Assisted("onBackClick")
     private val onBackClick: () -> Unit,
     habitatRepository: HabitatRepository,
     private val habitatBuildDialogComponentFactory: HabitatBuildDialogComponent.Factory,
@@ -138,13 +133,5 @@ class DefaultHabitatListScreenComponent @AssistedInject internal constructor(
         bottomSheetPagesNavigation.pop()
     }
 
-    @AssistedFactory
-    interface Factory : HabitatListScreenComponent.Factory {
-
-        override fun create(
-            componentContext: ComponentContext,
-            @Assisted("onBackClick")
-            onBackClick: () -> Unit,
-        ): DefaultHabitatListScreenComponent
-    }
+    interface Factory : HabitatListScreenComponent.Factory
 }

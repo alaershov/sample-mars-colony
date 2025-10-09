@@ -5,9 +5,6 @@ import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogState
 import com.alaershov.mars_colony.habitat.totalCapacity
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,14 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class DefaultHabitatDismantleDialogComponent @AssistedInject internal constructor(
-    @Assisted
+class DefaultHabitatDismantleDialogComponent internal constructor(
     componentContext: ComponentContext,
-    @Assisted("habitatId")
     habitatId: String,
-    @Assisted("onConfirmationNeeded")
     private val onConfirmationNeeded: () -> Unit,
-    @Assisted("onDismiss")
     private val onDismiss: () -> Unit,
     private val habitatRepository: HabitatRepository,
 ) : HabitatDismantleDialogComponent, ComponentContext by componentContext {
@@ -67,17 +60,5 @@ class DefaultHabitatDismantleDialogComponent @AssistedInject internal constructo
         onDismiss()
     }
 
-    @AssistedFactory
-    interface Factory : HabitatDismantleDialogComponent.Factory {
-
-        override fun create(
-            componentContext: ComponentContext,
-            @Assisted("habitatId")
-            habitatId: String,
-            @Assisted("onConfirmationNeeded")
-            onConfirmationNeeded: () -> Unit,
-            @Assisted("onDismiss")
-            onDismiss: () -> Unit,
-        ): DefaultHabitatDismantleDialogComponent
-    }
+    interface Factory : HabitatDismantleDialogComponent.Factory
 }

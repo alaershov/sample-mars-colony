@@ -18,13 +18,9 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.serialization.Serializable
 
-class DefaultRootComponent @AssistedInject internal constructor(
-    @Assisted
+class DefaultRootComponent internal constructor(
     private val componentContext: ComponentContext,
 
     // Кроме контекста, корневому компоненту нужно уметь создавать свои дочерние компоненты
@@ -137,11 +133,5 @@ class DefaultRootComponent @AssistedInject internal constructor(
         data object PowerPlantList : Config()
     }
 
-    @AssistedFactory
-    interface Factory : RootComponent.Factory {
-
-        override fun create(
-            componentContext: ComponentContext,
-        ): DefaultRootComponent
-    }
+    interface Factory : RootComponent.Factory
 }

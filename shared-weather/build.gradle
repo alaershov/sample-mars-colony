@@ -4,7 +4,6 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
-    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -37,6 +36,5 @@ dependencies {
 
     implementation libs.bundles.decompose
 
-    implementation libs.dagger.core
-    ksp libs.dagger.compiler
+    implementation libs.koin.core
 }

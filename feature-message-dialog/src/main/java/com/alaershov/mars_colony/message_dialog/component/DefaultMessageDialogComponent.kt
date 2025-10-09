@@ -2,17 +2,11 @@ package com.alaershov.mars_colony.message_dialog.component
 
 import com.alaershov.mars_colony.message_dialog.MessageDialogState
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class DefaultMessageDialogComponent @AssistedInject internal constructor(
-    @Assisted
+class DefaultMessageDialogComponent internal constructor(
     componentContext: ComponentContext,
-    @Assisted
     dialogState: MessageDialogState,
-    @Assisted
     private val onButtonClick: () -> Unit,
 ) : MessageDialogComponent, ComponentContext by componentContext {
 
@@ -24,13 +18,5 @@ class DefaultMessageDialogComponent @AssistedInject internal constructor(
         onButtonClick.invoke()
     }
 
-    @AssistedFactory
-    interface Factory : MessageDialogComponent.Factory {
-
-        override fun create(
-            componentContext: ComponentContext,
-            dialogState: MessageDialogState,
-            onButtonClick: () -> Unit,
-        ): DefaultMessageDialogComponent
-    }
+    interface Factory : MessageDialogComponent.Factory
 }
