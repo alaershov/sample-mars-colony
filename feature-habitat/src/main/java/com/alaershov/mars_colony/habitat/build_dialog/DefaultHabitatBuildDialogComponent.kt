@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class DefaultHabitatBuildDialogComponent @AssistedInject internal constructor(
-    private val habitatRepository: HabitatRepository,
     @Assisted
     componentContext: ComponentContext,
     @Assisted("onDismiss")
-    private val onDismiss: () -> Unit
+    private val onDismiss: () -> Unit,
+    private val habitatRepository: HabitatRepository,
 ) : HabitatBuildDialogComponent, ComponentContext by componentContext {
 
     private val _state = MutableStateFlow(
