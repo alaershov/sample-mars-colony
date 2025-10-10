@@ -7,9 +7,6 @@ import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.totalPower
 import com.alaershov.mars_colony.shared.weather.WeatherRepository
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -23,15 +20,12 @@ import kotlinx.coroutines.launch
 // Обратите внимание на internal constructor
 // этот компонент можно создать через фабрику,
 // но нельзя из другого модуля напрямую вызвать конструктор.
-class DefaultDashboardScreenComponent @AssistedInject internal constructor(
+class DefaultDashboardScreenComponent internal constructor(
     // сначала объявлены "аргументы"
     // они передаются в фабрику компонента
     // и подставляются сюда через Assisted Inject
-    @Assisted
     componentContext: ComponentContext,
-    @Assisted("navigateToHabitatList")
     private val navigateToHabitatList: () -> Unit,
-    @Assisted("navigateToPowerPlantList")
     private val navigateToPowerPlantList: () -> Unit,
 
     // ниже идут зависимости
@@ -87,25 +81,5 @@ class DefaultDashboardScreenComponent @AssistedInject internal constructor(
             habitatRepository.buildHabitat(1)
             // TODO обновить
         }
-    }
-
-    /**
-     * Интерфейс фабрики для AssistedInject через Dagger.
-     *
-     * Он реализует интерфейс фабрики из интерфейса компонента,
-     * и связывается с ним в DashboardComponentModule.
-     */
-    @AssistedFactory
-    interface Factory : DashboardScreenComponent.Factory {
-        override fun create(
-            componentContext: ComponentContext,
-            // Аннотации @Assisted("name") нужны, чтобы разрулить
-            // зависимости с одинаковым типом, но разными именами.
-            // Аналогично работает @Named("name") в обычном графе зависимостей.
-            @Assisted("navigateToHabitatList")
-            navigateToHabitatList: () -> Unit,
-            @Assisted("navigateToPowerPlantList")
-            navigateToPowerPlantList: () -> Unit,
-        ): DefaultDashboardScreenComponent
     }
 }

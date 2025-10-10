@@ -5,7 +5,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
     id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -38,8 +37,7 @@ dependencies {
 
     implementation libs.bundles.decompose
 
-    implementation libs.dagger.core
-    ksp libs.dagger.compiler
+    implementation libs.koin.core
 
     implementation project(':ui')
     implementation project(':bottom-sheet')

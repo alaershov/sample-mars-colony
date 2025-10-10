@@ -2,12 +2,23 @@ package com.alaershov.mars_colony.root.di
 
 import com.alaershov.mars_colony.root.DefaultRootComponent
 import com.alaershov.mars_colony.root.RootComponent
-import dagger.Binds
-import dagger.Module
+import org.koin.core.module.Module
+import org.koin.dsl.module
 
-@Module
-interface RootComponentDiModule {
-
-    @Binds
-    fun componentFactory(impl: DefaultRootComponent.Factory): RootComponent.Factory
+val rootKoinModule: Module = module {
+    factory<RootComponent.Factory> {
+        object : RootComponent.Factory {
+            override fun create(
+                componentContext: com.arkivanov.decompose.ComponentContext
+            ): RootComponent {
+                return DefaultRootComponent(
+                    componentContext = componentContext,
+                    dashboardComponentFactory = get(),
+                    habitatInfoScreenComponentFactory = get(),
+                    habitatListScreenComponentFactory = get(),
+                    powerPlantListScreenComponentFactory = get(),
+                )
+            }
+        }
+    }
 }

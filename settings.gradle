@@ -44,9 +44,9 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('dagger', '2.57.1')
-            library('dagger-core', 'com.google.dagger', 'dagger').versionRef('dagger')
-            library('dagger-compiler', 'com.google.dagger', 'dagger-compiler').versionRef('dagger')
+            version('koin', '3.5.6')
+            library('koin-core', 'io.insert-koin', 'koin-core').versionRef('koin')
+            library('koin-android', 'io.insert-koin', 'koin-android').versionRef('koin')
         }
     }
 }

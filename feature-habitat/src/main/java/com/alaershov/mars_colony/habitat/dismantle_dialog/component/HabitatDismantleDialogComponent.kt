@@ -3,7 +3,6 @@ package com.alaershov.mars_colony.habitat.dismantle_dialog.component
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogState
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
 import kotlinx.coroutines.flow.StateFlow
 
 interface HabitatDismantleDialogComponent : BottomSheetContentComponent {
