@@ -2,9 +2,9 @@ package com.alaershov.mars_colony.message_dialog.component
 
 import com.alaershov.mars_colony.message_dialog.MessageDialogState
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.yandex.yatagan.Assisted
+import com.yandex.yatagan.AssistedFactory
+import com.yandex.yatagan.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class DefaultMessageDialogComponent @AssistedInject internal constructor(

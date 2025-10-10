@@ -16,9 +16,9 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.value.Value
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.yandex.yatagan.Assisted
+import com.yandex.yatagan.AssistedFactory
+import com.yandex.yatagan.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

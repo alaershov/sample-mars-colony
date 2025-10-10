@@ -1,8 +1,8 @@
 package com.alaershov.mars_colony.shared.weather.di
 
 import com.alaershov.mars_colony.shared.weather.WeatherRepository
-import dagger.Module
-import dagger.Provides
+import com.yandex.yatagan.Module
+import com.yandex.yatagan.Provides
 import javax.inject.Singleton
 
 @Module

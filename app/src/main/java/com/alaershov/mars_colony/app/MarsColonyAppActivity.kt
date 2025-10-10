@@ -8,6 +8,7 @@ import com.alaershov.mars_colony.root.RootComponent
 import com.alaershov.mars_colony.root.RootScreen
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 import com.arkivanov.decompose.defaultComponentContext
+import com.yandex.yatagan.Yatagan
 
 /**
  * Единственное Activity, которое является точкой входа в приложение.
@@ -19,9 +20,9 @@ class MarsColonyAppActivity : ComponentActivity() {
 
         enableEdgeToEdge()
 
-        // Единственное место, где мы создаём и напрямую используем Dagger компонент
+        // Единственное место, где мы создаём и напрямую используем Yatagan компонент
         // для того, чтобы создать корневой Decompose-компонент.
-        val component: RootComponent = DaggerMarsColonyAppDiComponent.create()
+        val component: RootComponent = Yatagan.create(MarsColonyAppDiComponent::class.java)
             .rootComponentFactory
             .create(
                 componentContext = defaultComponentContext(),

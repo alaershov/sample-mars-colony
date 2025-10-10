@@ -5,9 +5,9 @@ import com.alaershov.mars_colony.habitat.HabitatRepository
 import com.alaershov.mars_colony.habitat.dismantle_dialog.HabitatDismantleDialogState
 import com.alaershov.mars_colony.habitat.totalCapacity
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.yandex.yatagan.Assisted
+import com.yandex.yatagan.AssistedFactory
+import com.yandex.yatagan.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -2,8 +2,8 @@ package com.alaershov.mars_colony.power.di
 
 import com.alaershov.mars_colony.power.list_screen.component.DefaultPowerPlantListScreenComponent
 import com.alaershov.mars_colony.power.list_screen.component.PowerPlantListScreenComponent
-import dagger.Binds
-import dagger.Module
+import com.yandex.yatagan.Binds
+import com.yandex.yatagan.Module
 
 @Module
 interface PowerComponentDiModule {

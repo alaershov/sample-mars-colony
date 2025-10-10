@@ -7,9 +7,9 @@ import com.alaershov.mars_colony.power.PowerPlantRepository
 import com.alaershov.mars_colony.power.totalPower
 import com.alaershov.mars_colony.shared.weather.WeatherRepository
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.yandex.yatagan.Assisted
+import com.yandex.yatagan.AssistedFactory
+import com.yandex.yatagan.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

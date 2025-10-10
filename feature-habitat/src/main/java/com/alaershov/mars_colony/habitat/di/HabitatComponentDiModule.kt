@@ -8,8 +8,8 @@ import com.alaershov.mars_colony.habitat.info_screen.DefaultHabitatInfoScreenCom
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.component.DefaultHabitatListScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.component.HabitatListScreenComponent
-import dagger.Binds
-import dagger.Module
+import com.yandex.yatagan.Binds
+import com.yandex.yatagan.Module
 
 @Module
 interface HabitatComponentDiModule {

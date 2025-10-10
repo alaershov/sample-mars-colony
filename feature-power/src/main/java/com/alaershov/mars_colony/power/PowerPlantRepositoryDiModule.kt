@@ -1,7 +1,7 @@
 package com.alaershov.mars_colony.power
 
-import dagger.Module
-import dagger.Provides
+import com.yandex.yatagan.Module
+import com.yandex.yatagan.Provides
 import javax.inject.Singleton
 
 @Module

@@ -55,10 +55,11 @@ dependencies {
 
     implementation libs.bundles.decompose
 
-    implementation libs.dagger.core
-    ksp libs.dagger.compiler
+    implementation libs.yatagan.api
+    ksp libs.yatagan.processor
 
     implementation project(':ui')
+    implementation project(':bottom-sheet')
     implementation project(':feature-root')
     implementation project(':feature-dashboard')
     implementation project(':feature-habitat')
