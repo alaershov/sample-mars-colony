@@ -35,4 +35,6 @@ dependencies {
     implementation libs.bundles.compose
 
     implementation libs.bundles.decompose
+
+    api libs.yatagan.api
 }

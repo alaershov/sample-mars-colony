@@ -18,9 +18,9 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.yandex.yatagan.Assisted
+import com.yandex.yatagan.AssistedFactory
+import com.yandex.yatagan.AssistedInject
 import kotlinx.serialization.Serializable
 
 class DefaultRootComponent @AssistedInject internal constructor(

@@ -37,6 +37,6 @@ dependencies {
 
     implementation libs.bundles.decompose
 
-    implementation libs.dagger.core
-    ksp libs.dagger.compiler
+    implementation libs.yatagan.api
+    ksp libs.yatagan.processor
 }

@@ -44,9 +44,9 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('dagger', '2.57.1')
-            library('dagger-core', 'com.google.dagger', 'dagger').versionRef('dagger')
-            library('dagger-compiler', 'com.google.dagger', 'dagger-compiler').versionRef('dagger')
+            version('yatagan', '1.6.1')
+            library('yatagan-api', 'com.yandex.yatagan', 'api-compiled').versionRef('yatagan')
+            library('yatagan-processor', 'com.yandex.yatagan', 'processor-ksp').versionRef('yatagan')
         }
     }
 }

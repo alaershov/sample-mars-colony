@@ -9,7 +9,7 @@ import com.alaershov.mars_colony.power.di.PowerComponentDiModule
 import com.alaershov.mars_colony.root.RootComponent
 import com.alaershov.mars_colony.root.di.RootComponentDiModule
 import com.alaershov.mars_colony.shared.weather.di.WeatherDiModule
-import dagger.Component
+import com.yandex.yatagan.Component
 import javax.inject.Singleton
 
 /**

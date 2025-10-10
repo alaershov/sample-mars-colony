@@ -1,9 +1,9 @@
 package com.alaershov.mars_colony.habitat.info_screen
 
 import com.arkivanov.decompose.ComponentContext
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import com.yandex.yatagan.Assisted
+import com.yandex.yatagan.AssistedFactory
+import com.yandex.yatagan.AssistedInject
 
 class DefaultHabitatInfoScreenComponent @AssistedInject internal constructor(
     @Assisted
