@@ -1,16 +1,14 @@
 package com.alaershov.mars_colony.shared.weather.di
 
 import com.alaershov.mars_colony.shared.weather.WeatherRepository
-import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 
 @Module
+@ComponentScan("com.alaershov.mars_colony.shared.weather")
 class WeatherDiModule {
 
-    @Provides
-    @Singleton
-    fun provideWeatherRepository(): WeatherRepository {
-        return WeatherRepository()
-    }
+    @Single
+    fun weatherRepository(): WeatherRepository = WeatherRepository()
 }
