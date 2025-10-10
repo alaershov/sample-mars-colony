@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -38,7 +39,13 @@ dependencies {
     implementation libs.bundles.decompose
 
     implementation libs.koin.core
+    implementation libs.koin.annotations
+    ksp libs.koin.ksp.compiler
 
     implementation project(':ui')
     implementation project(':bottom-sheet')
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
 }

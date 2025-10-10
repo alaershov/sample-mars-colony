@@ -44,9 +44,16 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('koin', '3.5.6')
+            version('koin', '4.0.0')
             library('koin-core', 'io.insert-koin', 'koin-core').versionRef('koin')
             library('koin-android', 'io.insert-koin', 'koin-android').versionRef('koin')
+            
+            version('koin-annotations', '2.0.0')
+            library('koin-annotations', 'io.insert-koin', 'koin-annotations').versionRef('koin-annotations')
+            library('koin-ksp-compiler', 'io.insert-koin', 'koin-ksp-compiler').versionRef('koin-annotations')
+            
+            version('ksp', '2.1.21-2.0.2')
+            plugin('ksp', 'com.google.devtools.ksp').versionRef('ksp')
         }
     }
 }

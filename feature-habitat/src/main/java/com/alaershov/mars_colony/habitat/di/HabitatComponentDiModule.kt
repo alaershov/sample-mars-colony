@@ -1,37 +1,49 @@
 package com.alaershov.mars_colony.habitat.di
 
 import com.alaershov.mars_colony.habitat.HabitatRepository
-import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
 import com.alaershov.mars_colony.habitat.build_dialog.DefaultHabitatBuildDialogComponent
+import com.alaershov.mars_colony.habitat.build_dialog.HabitatBuildDialogComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.component.DefaultHabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.dismantle_dialog.component.HabitatDismantleDialogComponent
 import com.alaershov.mars_colony.habitat.info_screen.DefaultHabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.info_screen.HabitatInfoScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.component.DefaultHabitatListScreenComponent
 import com.alaershov.mars_colony.habitat.list_screen.component.HabitatListScreenComponent
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import com.arkivanov.decompose.ComponentContext
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 
-val habitatKoinModule: Module = module {
-    single<HabitatRepository> { HabitatRepository }
+@Module
+@ComponentScan("com.alaershov.mars_colony.habitat")
+class HabitatComponentDiModule {
 
-    factory<HabitatBuildDialogComponent.Factory> {
-        object : HabitatBuildDialogComponent.Factory {
+    @Single
+    fun habitatRepository(): HabitatRepository = HabitatRepository
+
+    @Single
+    fun habitatBuildDialogComponentFactory(
+        habitatRepository: HabitatRepository,
+    ): HabitatBuildDialogComponent.Factory {
+        return object : HabitatBuildDialogComponent.Factory {
             override fun create(
-                componentContext: com.arkivanov.decompose.ComponentContext,
+                componentContext: ComponentContext,
                 onDismiss: () -> Unit,
             ): HabitatBuildDialogComponent {
                 return DefaultHabitatBuildDialogComponent(
                     componentContext = componentContext,
                     onDismiss = onDismiss,
-                    habitatRepository = get(),
+                    habitatRepository = habitatRepository,
                 )
             }
         }
     }
 
-    factory<HabitatDismantleDialogComponent.Factory> {
-        object : HabitatDismantleDialogComponent.Factory {
+    @Single
+    fun habitatDismantleDialogComponentFactory(
+        habitatRepository: HabitatRepository,
+    ): HabitatDismantleDialogComponent.Factory {
+        return object : HabitatDismantleDialogComponent.Factory {
             override fun create(
                 componentContext: com.arkivanov.decompose.ComponentContext,
                 habitatId: String,
@@ -43,14 +55,15 @@ val habitatKoinModule: Module = module {
                     habitatId = habitatId,
                     onConfirmationNeeded = onConfirmationNeeded,
                     onDismiss = onDismiss,
-                    habitatRepository = get(),
+                    habitatRepository = habitatRepository,
                 )
             }
         }
     }
 
-    factory<HabitatInfoScreenComponent.Factory> {
-        object : HabitatInfoScreenComponent.Factory {
+    @Single
+    fun habitatInfoScreenComponentFactory(): HabitatInfoScreenComponent.Factory {
+        return object : HabitatInfoScreenComponent.Factory {
             override fun create(
                 componentContext: com.arkivanov.decompose.ComponentContext,
                 habitatId: String,
@@ -63,8 +76,14 @@ val habitatKoinModule: Module = module {
         }
     }
 
-    factory<HabitatListScreenComponent.Factory> {
-        object : HabitatListScreenComponent.Factory {
+    @Single
+    fun habitatListScreenComponentFactory(
+        habitatRepository: HabitatRepository,
+        habitatBuildDialogComponentFactory: HabitatBuildDialogComponent.Factory,
+        habitatDismantleDialogComponentFactory: HabitatDismantleDialogComponent.Factory,
+        messageDialogComponentFactory: com.alaershov.mars_colony.message_dialog.component.MessageDialogComponent.Factory,
+    ): HabitatListScreenComponent.Factory {
+        return object : HabitatListScreenComponent.Factory {
             override fun create(
                 componentContext: com.arkivanov.decompose.ComponentContext,
                 onBackClick: () -> Unit,
@@ -72,10 +91,10 @@ val habitatKoinModule: Module = module {
                 return DefaultHabitatListScreenComponent(
                     componentContext = componentContext,
                     onBackClick = onBackClick,
-                    habitatRepository = get(),
-                    habitatBuildDialogComponentFactory = get(),
-                    habitatDismantleDialogComponentFactory = get(),
-                    messageDialogComponentFactory = get(),
+                    habitatRepository = habitatRepository,
+                    habitatBuildDialogComponentFactory = habitatBuildDialogComponentFactory,
+                    habitatDismantleDialogComponentFactory = habitatDismantleDialogComponentFactory,
+                    messageDialogComponentFactory = messageDialogComponentFactory,
                 )
             }
         }

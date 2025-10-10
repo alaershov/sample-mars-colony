@@ -1,9 +1,14 @@
 package com.alaershov.mars_colony.shared.weather.di
 
 import com.alaershov.mars_colony.shared.weather.WeatherRepository
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 
-val weatherKoinModule: Module = module {
-    single { WeatherRepository() }
+@Module
+@ComponentScan("com.alaershov.mars_colony.shared.weather")
+class WeatherDiModule {
+
+    @Single
+    fun weatherRepository(): WeatherRepository = WeatherRepository()
 }

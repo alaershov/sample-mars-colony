@@ -1,15 +1,28 @@
 package com.alaershov.mars_colony.dashboard.di
 
-import com.alaershov.mars_colony.dashboard.component.DashboardScreenComponent
 import com.alaershov.mars_colony.dashboard.component.DefaultDashboardScreenComponent
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import com.alaershov.mars_colony.dashboard.component.DashboardScreenComponent
+import com.alaershov.mars_colony.habitat.HabitatRepository
+import com.alaershov.mars_colony.power.PowerPlantRepository
+import com.alaershov.mars_colony.shared.weather.WeatherRepository
+import com.arkivanov.decompose.ComponentContext
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 
-val dashboardKoinModule: Module = module {
-    factory<DashboardScreenComponent.Factory> {
-        object : DashboardScreenComponent.Factory {
+@Module
+@ComponentScan("com.alaershov.mars_colony.dashboard")
+class DashboardComponentDiModule {
+
+    @Single
+    fun dashboardScreenComponentFactory(
+        habitatRepository: HabitatRepository,
+        powerPlantRepository: PowerPlantRepository,
+        weatherRepository: WeatherRepository,
+    ): DashboardScreenComponent.Factory {
+        return object : DashboardScreenComponent.Factory {
             override fun create(
-                componentContext: com.arkivanov.decompose.ComponentContext,
+                componentContext: ComponentContext,
                 navigateToHabitatList: () -> Unit,
                 navigateToPowerPlantList: () -> Unit,
             ): DashboardScreenComponent {
@@ -17,9 +30,9 @@ val dashboardKoinModule: Module = module {
                     componentContext = componentContext,
                     navigateToHabitatList = navigateToHabitatList,
                     navigateToPowerPlantList = navigateToPowerPlantList,
-                    habitatRepository = get(),
-                    powerPlantRepository = get(),
-                    weatherRepository = get(),
+                    habitatRepository = habitatRepository,
+                    powerPlantRepository = powerPlantRepository,
+                    weatherRepository = weatherRepository,
                 )
             }
         }

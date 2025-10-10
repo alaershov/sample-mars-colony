@@ -4,6 +4,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.compose'
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -55,6 +56,8 @@ dependencies {
     implementation libs.bundles.decompose
 
     implementation libs.koin.android
+    implementation libs.koin.annotations
+    ksp libs.koin.ksp.compiler
 
     implementation project(':ui')
     implementation project(':feature-root')
@@ -73,4 +76,8 @@ dependencies {
 
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
 }
