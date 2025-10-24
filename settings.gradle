@@ -17,7 +17,7 @@ dependencyResolutionManagement {
             library('androidx-lifecycle-runtime', 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.4')
             library('androidx-activity-compose', 'androidx.activity:activity-compose:1.11.0')
 
-            version('androidx-compose-bom', '2025.09.00')
+            version('androidx-compose-bom', '2025.10.01')
             library('androidx-compose-bom', 'androidx.compose', 'compose-bom').versionRef('androidx-compose-bom')
             library('androidx-compose-ui-ui', 'androidx.compose.ui', 'ui').withoutVersion()
             library('androidx-compose-ui-ui-tooling', 'androidx.compose.ui', 'ui-tooling').withoutVersion()
@@ -33,7 +33,7 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('decompose', '3.3.0')
+            version('decompose', '3.4.0')
             library('decompose', 'com.arkivanov.decompose', 'decompose').versionRef('decompose')
             library('decompose-extensions-compose', 'com.arkivanov.decompose', 'extensions-compose').versionRef('decompose')
             bundle(
@@ -44,7 +44,7 @@ dependencyResolutionManagement {
                     ]
             )
 
-            version('dagger', '2.57.1')
+            version('dagger', '2.57.2')
             library('dagger-core', 'com.google.dagger', 'dagger').versionRef('dagger')
             library('dagger-compiler', 'com.google.dagger', 'dagger-compiler').versionRef('dagger')
         }

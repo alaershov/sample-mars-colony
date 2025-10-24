@@ -1,13 +1,16 @@
 package com.alaershov.mars_colony.bottom_sheet.material3.pages
 
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.SwipeToDismissBoxDefaults.positionalThreshold
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import com.alaershov.mars_colony.bottom_sheet.BottomSheetContentComponent
 
 /**
@@ -28,7 +31,8 @@ internal class ComponentSheetState(
 
     val sheetState: SheetState = SheetState(
         skipPartiallyExpanded = true,
-        density = density,
+        positionalThreshold = { with(density) { 56.dp.toPx() } },
+        velocityThreshold = { with(density) { 125.dp.toPx() } },
         initialValue = SheetValue.Hidden,
         confirmValueChange = { sheetValue ->
             if (sheetValue == SheetValue.Hidden) {

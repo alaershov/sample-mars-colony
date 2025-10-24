@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,10 +16,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alaershov.mars_colony.power.list_screen.component.PowerPlantListScreenComponent
 import com.alaershov.mars_colony.power.list_screen.component.PreviewPowerPlantListScreenComponent
+import com.alaershov.mars_colony.ui.R
 import com.alaershov.mars_colony.ui.theme.MarsColonyTheme
 
 @Composable
@@ -46,7 +45,7 @@ fun PowerPlantListScreen(component: PowerPlantListScreenComponent) {
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        painter = painterResource(R.drawable.ic_arrow_back),
                         contentDescription = "Back"
                     )
                 }
@@ -58,7 +57,7 @@ fun PowerPlantListScreen(component: PowerPlantListScreenComponent) {
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Add,
+                        painter = painterResource(R.drawable.ic_add),
                         contentDescription = "Build a Habitat"
                     )
                 }
